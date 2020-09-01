@@ -169,7 +169,7 @@ input[type="text"], input[type="password"] {
     outline: none;
 	color:#7a7a7a;
 }
-input[type="submit"] {
+input,select[type="submit"] {
     color: #fff;
     background: #2ccea2;
     padding: 12px 20px;
