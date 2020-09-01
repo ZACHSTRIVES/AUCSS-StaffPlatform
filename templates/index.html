@@ -37,22 +37,28 @@
 						<li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>Sign in</span></li>
 				    </ul>		
 		            <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
-						<form action="#" method="post">
+						<form action="#" method="post" form="aa">
 							<input placeholder="Name" name="name" type="text" required="">
 							<input placeholder="Email Address" name="email" type="text" required="">
 							<input placeholder="Password" name="password_1" type="password" required="">
 							<input placeholder="Confirm Password" name="password_2" type="password" required="">
-                            <select name="departement">
+                            <select name="department">
                                     <option value="ep">Event Planning</option>
                                     <option value="os">Operation Support</option>
                                     <option value="pr">Public Relations</option>
                                     <option value="hr">Human Resources</option>
+
                             </select>
 							<span class="checkbox1">
 								<label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>I Agree To All Terms And Conditions</label>
 							</span>
 
 							<input type="submit" value="Create Account"/>
+                            <span style=" font-size:20px;color: red" >
+                              {% for item in get_flashed_messages() %}
+                              {{ item }}
+                              {% endfor %}
+                            </span>
 						</form>
 			        </div>	
 			        <div class="tab-2 resp-tab-content" aria-labelledby="tab_item-1">
@@ -64,6 +70,11 @@
 							</span>
 							
 							<input type="submit" value="Sign in"/>
+                            <span style=" font-size:20px;color: red" >
+                              {% for item in get_flashed_messages() %}
+                              {{ item }}
+                              {% endfor %}
+                            </span>
 						</form>
 					 </div>
 				</div> 
@@ -72,7 +83,7 @@
 		<div class="left-agile">
 			<div class="left-text">
 				<h2>aucss</h2>
-				<h3>背景图片</h3>
+				<h3>这里放图片</h3>
 				<h4>背景图片 命名为1.img</h4>
 			</div>
         </div>
@@ -81,6 +92,7 @@
 	
 	<div class="footer">
 		<p> &copy; 2020 AUCSS. All Rights Reserved | Design by Zach Wang & Douglas Feng</p>
+        <p>Version 0.0.1 测试版本</p>
 	</div>
 	<script src="static/js/easyResponsiveTabs.js"  type="text/javascript"></script>
 </body>

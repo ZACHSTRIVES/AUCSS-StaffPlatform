@@ -915,5 +915,35 @@ SELECT|sys.sys_config:null
       <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE!
 </ObjectGrants>
     </user>
+    <table id="286" parent="2" name="user"/>
+    <column id="287" parent="286" name="Name">
+      <Position>1</Position>
+      <DataType>char(180)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="288" parent="286" name="email">
+      <Position>2</Position>
+      <DataType>char(180)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="289" parent="286" name="password">
+      <Position>3</Position>
+      <DataType>char(180)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="290" parent="286" name="department">
+      <Position>4</Position>
+      <DataType>char(180)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="291" parent="286" name="user_email_uindex">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="292" parent="286" name="user_email_uindex">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>user_email_uindex</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>
