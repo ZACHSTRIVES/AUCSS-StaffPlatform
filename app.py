@@ -3,7 +3,7 @@ from datetime import time
 from flask import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
-
+from meeting import *
 import config
 
 app = Flask(__name__)
@@ -102,21 +102,19 @@ def login_status():
     return {}
 
 
-@app.route('/backend',methods=['GET'])
+@app.route('/backend', methods=['GET'])
 def dashbord():
-    login_=login_status()
+    login_ = login_status()
     print(login_)
-    if len(login_)==0:
+    if len(login_) == 0:
         return render_template('index.html')
     else:
-        return render_template('backend.html',issue_information=login_['name'])
 
-
-
-
-
-
-
+        data = [login_['name']]  # data=[0=email,1=meetings,2=len(meetings)]
+        meetings = list_meeting_of_user(login_['email'])
+        data.append(meetings)
+        data.append(str(len(meetings)))
+        return render_template('backend.html', issue_information=data)
 
 
 if __name__ == '__main__':

@@ -42,7 +42,7 @@
     <li class="dropdown link">
       <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox">
           <b>
-          {% for item in issue_information%}
+          {% for item in issue_information[0]%}
             {{item}}
            {% endfor %}
               </b>
@@ -132,7 +132,12 @@
     <div class="col-md-12 col-lg-6">
       <div class="panel panel-widget">
         <div class="panel-title">
-          MEETINGS <span class="label label-warning">1</span>
+          MEETINGS
+            <span class="label label-warning">
+                {% for item in issue_information[2]%}
+                    {{ item }}
+                {% endfor %}
+            </span>
           <ul class="panel-tools">
             <li><a class="icon search-tool"><i class="fa fa-search"></i></a></li>
             <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
@@ -161,12 +166,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>02/09/2020 <b>14:30</b></td>
-                <td>Weekly Meeting</td>
-                <td>OGGB</td>
-                <td></td>
-              </tr>
+{#                <td>02/09/2020 <b>14:30</b></td>#}
+{#                <td>Weekly Meeting</td>#}
+{#                <td>OGGB</td>#}
+{#                <td></td>#}
+                   {% for item in issue_information[1]%}
+                       <tr>
+                       <td>{{ item[2] }}<b>{{ item[3] }}</b></td>
+                       <td>{{ item[1] }}</td>
+                       <td>{{ item[4] }}</td>
+                       </tr>
+
+                   {% endfor %}
+
 
             </tbody>
           </table>
