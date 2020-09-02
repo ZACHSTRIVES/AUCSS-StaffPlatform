@@ -1,5 +1,4 @@
 from datetime import time
-
 from flask import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
@@ -10,11 +9,13 @@ app = Flask(__name__)
 
 app.config.from_object(config)
 
+from apps import management
 
-@app.route('/', methods=['GET', 'POST'])
+app.register_blueprint(management.buleprint)
+
+
+@app.route('/', methods=['POST'])
 def login_page():
-    if request.method == 'GET':
-        return render_template('index.html')
     if request.method == 'POST' and len(request.form) == 5:
         name = request.form.get('name')
         email = request.form.get('email')
@@ -90,32 +91,38 @@ def login_status():
     if email:
         try:
             cur = db.cursor()
-            sql = "select name,department from user where email = '%s'" % email
+            sql = "select name,department,type from user where email = '%s'" % email
             db.ping(reconnect=True)
             cur.execute(sql)
             result = cur.fetchone()
             if result:
-                return {'email': email, 'name': result[0], 'department': result[1]}
+                return {'email': email, 'name': result[0], 'department': result[1], 'type': result[2]}
         except Exception as e:
             raise e
     # If email information does not exist, no login, return empty
     return {}
 
 
-@app.route('/backend', methods=['GET'])
+@app.route('/', methods=['GET'])
 def dashbord():
     login_ = login_status()
-    print(login_)
     if len(login_) == 0:
         return render_template('index.html')
     else:
-
-        data = [login_['name']]  # data=[0=email,1=meetings,2=len(meetings)]
         meetings = list_meeting_of_user(login_['email'])
-        data.append(meetings)
-        data.append(str(len(meetings)))
-        return render_template('backend.html', issue_information=data)
+        data = [login_['name'], meetings, str(len(meetings))]  # data=[0=email,1=meetings,2=len(meetings)]
+        if login_['type'] == 1:  # Category 1: General Staff
+            return render_template('backend.html', issue_information=data)
+        if login_['type'] == 2:  # Category 2: HR managers
+            return management.admin(data)
 
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for(('dashbord')))
+
+
+app.register_blueprint
 if __name__ == '__main__':
     app.run()

@@ -14,4 +14,3 @@ def list_meeting_of_user(user_email):
         print(e)
 
 
-print(list_meeting_of_user('wangziqi0325@gmail.com'))

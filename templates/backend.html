@@ -14,9 +14,11 @@
 
   </head>
   <body>
+  {% block loading %}
   <!-- Start Page Loading -->
   <div class="loading"><img src="static/img/loading.gif" alt="loading-img"></div>
   <!-- End Page Loading -->
+  {% endblock %}
  <!-- //////////////////////////////////////////////////////////////////////////// --> 
   <!-- START TOP -->
   <div id="top" class="clearfix">
@@ -49,7 +51,7 @@
           <span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
           <li role="presentation" class="dropdown-header">Profile</li>
-          <li><a href="#"><i class="fa falist fa-power-off"></i> Logout</a></li>
+          <li><a href="{{ url_for('logout') }}"><i class="fa falist fa-power-off"></i> Logout</a> </li>
         </ul>
     </li>
 
@@ -61,44 +63,29 @@
  <!-- //////////////////////////////////////////////////////////////////////////// --> 
 
 
-<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+  {% block siderbar %}
 <!-- START SIDEBAR -->
 <div class="sidebar clearfix">
 
 <ul class="sidebar-panel nav">
-  <li class="sidetitle">MAIN</li>
+  <li class="sidetitle">FEATURE</li>
   <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard<span class="label label-default">2</span></a></li>
-  <li><a href="mailbox.html"><span class="icon color6"><i class="fa fa-envelope-o"></i></span>Mailbox<span class="label label-default">19</span></a></li>
-  <li><a href="charts.html"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Charts</a></li>
-  <li><a href="#"><span class="icon color9"><i class="fa fa-th"></i></span>Tables<span class="caret"></span></a>
-    <ul>
-      <li><a href="basic-table.html">Basic Tables</a></li>
-      <li><a href="data-table.html">Data Tables</a></li>
-    </ul>
-  </li>
-  <li><a href="#"><span class="icon color10"><i class="fa fa-check-square-o"></i></span>Forms<span class="caret"></span></a>
-    <ul>
-      <li><a href="form-elements.html">Form Elements</a></li>
-      <li><a href="layouts.html">Form Layouts</a></li>
-      <li><a href="text-editors.html">Text Editors</a></li>
-    </ul>
-  </li>
-  <li><a href="widgets.html"><span class="icon color11"><i class="fa fa-diamond"></i></span>Widgets</a></li>
-  <li><a href="calendar.html"><span class="icon color8"><i class="fa fa-calendar-o"></i></span>Calendar<span class="label label-danger">NEW</span></a></li>
-  <li><a href="typography.html"><span class="icon color12"><i class="fa fa-font"></i></span>Typography</a></li>
+
 
 </ul>
 
 
 
 </div>
+  {% endblock %}
 <!-- END SIDEBAR -->
 <!-- //////////////////////////////////////////////////////////////////////////// --> 
 
  <!-- //////////////////////////////////////////////////////////////////////////// --> 
 <!-- START CONTENT -->
 <div class="content">
-
+ {% block content %}
   <!-- Start Page Header -->
   <div class="page-header">
     <h1 class="title">Dashboard</h1>
@@ -119,7 +106,8 @@
 
   </div>
   <!-- End Page Header -->
-
+{% endblock %}
+{%   block container %}
 
  <!-- //////////////////////////////////////////////////////////////////////////// --> 
 <!-- START CONTAINER -->
@@ -166,10 +154,6 @@
               </tr>
             </thead>
             <tbody>
-{#                <td>02/09/2020 <b>14:30</b></td>#}
-{#                <td>Weekly Meeting</td>#}
-{#                <td>OGGB</td>#}
-{#                <td></td>#}
                    {% for item in issue_information[1]%}
                        <tr>
                        <td>{{ item[2] }}<b>{{ item[3] }}</b></td>
@@ -189,7 +173,7 @@
     <!-- End 会议 -->
 
 
-
+{% endblock %}
 
   </div>
 
