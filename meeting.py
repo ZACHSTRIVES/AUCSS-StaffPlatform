@@ -13,4 +13,16 @@ def list_meeting_of_user(user_email):
     except Exception as e:
         print(e)
 
+def list_all_meetings():
+    try:
+        cur = db.cursor()
+        sql = "select * from meeting"
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        result = cur.fetchall()
+        return result
+
+    except Exception as e:
+        print(e)
+
 

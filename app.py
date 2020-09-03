@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 app.config.from_object(config)
 
-from apps import management
+from apps import hr
 
-app.register_blueprint(management.buleprint)
+app.register_blueprint(hr.buleprint)
 
 
 @app.route('/', methods=['POST'])
@@ -114,13 +114,14 @@ def dashbord():
         if login_['type'] == 1:  # Category 1: General Staff
             return render_template('backend.html', issue_information=data)
         if login_['type'] == 2:  # Category 2: HR managers
-            return management.admin(data)
+            return hr.admin(data)
 
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for(('dashbord')))
+
 
 
 app.register_blueprint
