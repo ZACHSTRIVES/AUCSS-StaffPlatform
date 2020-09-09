@@ -10,5 +10,23 @@
         <property name="serverTimezone" value="UTC" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="aucsssit_AUCSS@198.7.62.150" uuid="3299a735-b8b1-4a7d-9d23-fc15b8cab7b9">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://198.7.62.150:3306/aucsssit_AUCSS</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="aucsssit_AUCSS@198.7.62.150 [2]" uuid="d1feb8ec-0022-467a-b805-c081313f7088">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://198.7.62.150:3306/aucsssit_AUCSS</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="aucsssite_AUCSS@198.7.62.150" uuid="3eae1294-03dc-4b3f-9cb5-1de8d416c5e1">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://198.7.62.150:2083/aucsssite_AUCSS</jdbc-url>
+    </data-source>
   </component>
 </project>

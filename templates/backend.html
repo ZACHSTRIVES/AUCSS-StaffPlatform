@@ -44,9 +44,7 @@
     <li class="dropdown link">
       <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox">
           <b>
-          {% for item in issue_information[0]%}
-            {{item}}
-           {% endfor %}
+          {{ user_name }}
               </b>
           <span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
@@ -70,7 +68,7 @@
 
 <ul class="sidebar-panel nav">
   <li class="sidetitle">FEATURE</li>
-  <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard<span class="label label-default">2</span></a></li>
+  <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard</a></li>
 
 
 </ul>
@@ -156,9 +154,9 @@
             <tbody>
                    {% for item in issue_information[1]%}
                        <tr>
-                       <td>{{ item[2] }}<b>{{ item[3] }}</b></td>
+                       <td>{{ item[2] }}</td>
                        <td>{{ item[1] }}</td>
-                       <td>{{ item[4] }}</td>
+                       <td>{{ item[3] }}</td>
                        </tr>
 
                    {% endfor %}
@@ -218,7 +216,7 @@ Bootstrap Core JavaScript File
 Plugin.js - Some Specific JS codes for Plugin Settings
 ================================================ -->
 <script type="text/javascript" src="static/js/plugins.js"></script>
-
+<script type="text/javascript" src="static/js/daterangepicker.js"></script>
 <!-- ================================================
 Bootstrap Select
 ================================================ -->
@@ -256,9 +254,9 @@ Easy Pie Chart
 Sparkline
 ================================================ -->
 <!-- main file -->
-<script type="static/text/javascript" src="js/sparkline/sparkline.js"></script>
+<script type="text/javascript" src="static/js/sparkline/sparkline.js"></script>
 <!-- demo codes -->
-<script type="static/text/javascript" src="js/sparkline/sparkline-plugin.js"></script>
+<script type="text/javascript" src="static/js/sparkline/sparkline-plugin.js"></script>
 
 <!-- ================================================
 Rickshaw
@@ -275,6 +273,38 @@ Moment.js
 ================================================ -->
 <script type="text/javascript" src="static/js/moment/moment.min.js"></script>
 
+<!-- ================================================
+jQuery Library
+================================================ -->
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+
+<!-- ================================================
+Bootstrap Core JavaScript File
+================================================ -->
+<script src="static/js/bootstrap/bootstrap.min.js"></script>
+
+<!-- ================================================
+Plugin.js - Some Specific JS codes for Plugin Settings
+================================================ -->
+<script type="text/javascript" src="static/js/plugins.js"></script>
+
+<!-- ================================================
+Bootstrap Select
+================================================ -->
+<script type="text/javascript" src="static/js/bootstrap-select/bootstrap-select.js"></script>
+
+<!-- ================================================
+Bootstrap Toggle
+================================================ -->
+<script type="text/javascript" src="static/js/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+<!-- ================================================
+Moment.js
+================================================ -->
+<script type="text/javascript" src="static/js/moment/moment.min.js"></script>
+
+<!-- ================================================
+Bootstrap Date Range Picker
 
 <!-- ================================================
 Below codes are only for index widgets

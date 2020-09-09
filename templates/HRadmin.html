@@ -2,18 +2,19 @@
 {% block loading %}
 {% endblock %}
 {% block siderbar %}
+
 <div class="sidebar clearfix">
 
 <ul class="sidebar-panel nav">
   <li class="sidetitle">FEATURE</li>
-  <li><a href="{{ url_for('dashbord') }}"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard<span class="label label-default">2</span></a></li>
+  <li><a href="{{ url_for('dashbord') }}"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard</a></li>
 
 
 </ul>
 
 <ul class="sidebar-panel nav">
   <li class="sidetitle">人力资源部</li>
-  <li><a href="{{ url_for('hr.manag_meeting') }}"><span class="icon color15"><i class="fa fa-columns"></i></span>Manage Meetings</a></li>
+  <li><a href="{{ url_for('manag_meeting') }}"><span class="icon color15"><i class="fa fa-columns"></i></span>Manage Meetings</a></li>
 {#  <li><a href="maps.html"><span class="icon color7"><i class="fa fa-map-marker"></i></span>Maps</a></li>#}
 </ul>
 

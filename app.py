@@ -3,17 +3,15 @@ from flask import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
 from meeting import *
+import random
 import config
 
 app = Flask(__name__)
 
 app.config.from_object(config)
 
-from apps import hr
 
-app.register_blueprint(hr.buleprint)
-
-
+# App init====================================================================================================
 @app.route('/', methods=['POST'])
 def login_page():
     if request.method == 'POST' and len(request.form) == 5:
@@ -112,9 +110,9 @@ def dashbord():
         meetings = list_meeting_of_user(login_['email'])
         data = [login_['name'], meetings, str(len(meetings))]  # data=[0=email,1=meetings,2=len(meetings)]
         if login_['type'] == 1:  # Category 1: General Staff
-            return render_template('backend.html', issue_information=data)
+            return render_template('backend.html',user_name=data[0],issue_information=data)
         if login_['type'] == 2:  # Category 2: HR managers
-            return hr.admin(data)
+            return hr(data)
 
 
 @app.route('/logout')
@@ -123,7 +121,74 @@ def logout():
     return redirect(url_for(('dashbord')))
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
-app.register_blueprint
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('500.html'), 500
+
+
+# Page for department of HR ====================================================================================
+@app.route('/hr')
+def hr(issu):
+    return render_template('HRadmin.html', user_name=issu[0],issue_information=issu)
+
+
+@app.route('/meetings', methods=['GET'])
+def manag_meeting():
+    user = login_status()
+    meetings = list_all_meetings()
+    issu = [user['name'], meetings]
+    return render_template('ManageMeetings.html', issue_information=issu)
+
+
+@app.route('/meetings', methods=['POST'])
+def add_meeting():
+    location = request.form.get('location')
+    title = request.form.get('title')
+    date = request.form.get('date')
+    time = request.form.get('time')
+    id = int(date.replace('-', '') + str(random.randrange(100, 999)))
+    meeting_ids = get_all_meeting_id()
+    while id in meeting_ids:
+        id = int(date.replace('-', '') + str(random.randrange(100, 999)))
+    datatime = date + " " + time + ":00"
+    sql = "INSERT INTO meeting(meeting_id,meeting_title,meeting_location,meeting_date) " \
+          "VALUES (%s,'%s','%s','%s')" % (id, title, location, datatime)
+
+    edit_meeting_to_database(sql)
+    add_all_staff_to_meeting(id)
+    return manag_meeting()
+
+
+@app.route('/<Mid>', methods=['GET', 'POST'])
+def edit_meeting(Mid):
+    if request.method=='GET':
+        try:
+            # cur = db.cursor()
+            # sql = "select * from meeting where meeting_id=%s"%Mid
+            # db.ping(reconnect=True)
+            # cur.execute(sql)
+            # meeting = cur.fetchall()
+            # title=meeting[1]
+            # location=meeting[2]
+            # date=meeting[3]
+            # print("进入页面正常")
+            return render_template('EditMeeting.html')
+        except Exception as e:
+            raise e
+
+
+
+
+
+
+
+# Page for department of PR ====================================================================================
+
+
 if __name__ == '__main__':
     app.run()

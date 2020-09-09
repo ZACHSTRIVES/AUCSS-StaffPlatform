@@ -1,0 +1,50 @@
+{% extends 'HRadmin.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block container %}
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+
+                    <div class="panel-title">
+                        Edit Meeting
+                    </div>
+
+                    <div class="panel-body">
+                        <form class="fieldset-form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="example10" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="example10">
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="input-prepend input-group">
+                                                            <span class="add-on input-group-addon"><i
+                                                                    class="fa fa-calendar"></i></span>
+                                            <input type="text" id="date-picker" class="form-control"
+                                                   value="2020-12-12" name="date"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example10" class="form-label">Time</label>
+                                    <input type="text" class="form-control" id="example10" style="width: 80px"
+                                           value="18:00">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </fieldset>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

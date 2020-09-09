@@ -1,0 +1,140 @@
+{% extends 'HRadmin.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block container %}
+    <div class="container-padding">
+
+
+        <!-- Start Row -->
+        <div class="row">
+
+            <!-- Start Panel -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        MANAGE MEETINGS
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="btn btn-option3 btn-xs"><i class="fa fa-plus"></i>ADD</button>
+                    </a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">ADD MEETING</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" method="post">
+                                        <div class="form-group">
+                                            <fieldset>
+                                                <div class="control-group">
+                                                    <div class="controls">
+                                                        <div class="input-prepend input-group">
+                                                            <span class="add-on input-group-addon"><i
+                                                                    class="fa fa-calendar"></i></span>
+                                                            <input type="text" id="date-picker" class="form-control"
+                                                                   value="2020-12-12" name="date"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <br>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="input002"
+                                                   class="col-sm-2 control-label form-label">Time</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="input002" value="18:00"
+                                                       style="width:70px" name="time">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="input002"
+                                                   class="col-sm-2 control-label form-label">Title</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="input002"
+                                                        name="title">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="input002"
+                                                   class="col-sm-2 control-label form-label">Location</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="input002"
+                                                        name="location">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label form-label">Participant</label>
+                                            <div class="col-sm-10">
+                                                <p class="form-control-static">All Staff</p>
+                                            </div>
+                                        </div>
+
+                                        <button type="button" class="btn btn-white" data-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-default" >Save changes
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    请按照格式填写时间及日期！
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- End Moda Code -->
+
+                    <div class="panel-body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr><td>Time</td><td>Title</td><td>Location</td><td>Participant</td><td>Operation</td></tr>
+                            {% for item in issue_information[1] %}
+                                <tr>
+                                    <td>{{ item[3] }}</td>
+                                    <td>{{ item[1] }}</td>
+                                    <td>{{ item[2] }}</td>
+                                    <td>ALL</td>
+                                    <td><a href="{{ url_for('edit_meeting',Mid=item[0]) }}" class="btn btn-primary"><i class="fa fa-arrows"></i>Edit</a></td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+
+<!-- Date Range and Time Picker -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#date-range-and-time-picker').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            format: 'MM/DD/YYYY h:mm A'
+        }, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    });
+</script>
