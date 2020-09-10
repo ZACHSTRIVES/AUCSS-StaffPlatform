@@ -1,10 +1,11 @@
-from datetime import time
+from datetime import *
 from flask import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
 from meeting import *
 import random
 import config
+from leave import *
 
 app = Flask(__name__)
 
@@ -110,7 +111,7 @@ def dashbord():
         meetings = list_meeting_of_user(login_['email'])
         data = [login_['name'], meetings, str(len(meetings))]  # data=[0=email,1=meetings,2=len(meetings)]
         if login_['type'] == 1:  # Category 1: General Staff
-            return render_template('backend.html',user_name=data[0],issue_information=data)
+            return render_template('backend.html', user_name=data[0], issue_information=data)
         if login_['type'] == 2:  # Category 2: HR managers
             return hr(data)
 
@@ -131,14 +132,55 @@ def page_not_found(e):
     return render_template('500.html'), 500
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return 'a'
+
+
+@app.route('/meetingleave', methods=['GET'])
+def meeting_leave():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    if request.method == 'GET':
+        info = ''
+        info1=''
+        meetings = list_meeting_of_user(login_['email'])
+        if len(meetings) == 0:
+            info = "You don't have meetings at the moment where you can ask for leave."
+        all_leaves = list_leave_apply_of_user(login_['email'])
+        if len(all_leaves)==0:
+            info1="You haven't asked for leave yet!"
+
+        return render_template('MeetingLeave.html', info=info,info1=info1, meetings=meetings, leaves=all_leaves)
+
+
+@app.route('/meetingleave', methods=['POST'])
+def apply_for_leave():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    reason = request.form.get('reason')
+    meeting_id = request.form.get('radio1')
+    email = login_['email']
+    apply_leave(email, meeting_id, reason)
+    return redirect(url_for(('meeting_leave')))
+
+
 # Page for department of HR ====================================================================================
 @app.route('/hr')
 def hr(issu):
-    return render_template('HRadmin.html', user_name=issu[0],issue_information=issu)
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    return render_template('HRadmin.html', user_name=issu[0], issue_information=issu)
 
 
 @app.route('/meetings', methods=['GET'])
 def manag_meeting():
+    login_ = login_status()
+    if len(login_) == 0:
+        return dashbord()
     user = login_status()
     meetings = list_all_meetings()
     issu = [user['name'], meetings]
@@ -147,44 +189,66 @@ def manag_meeting():
 
 @app.route('/meetings', methods=['POST'])
 def add_meeting():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
     location = request.form.get('location')
     title = request.form.get('title')
-    date = request.form.get('date')
+    date = request.form.get('date').split("-")
     time = request.form.get('time')
-    id = int(date.replace('-', '') + str(random.randrange(100, 999)))
+    id = int(str(date[2] + date[1] + date[0]) + str(random.randrange(100, 999)))
     meeting_ids = get_all_meeting_id()
     while id in meeting_ids:
         id = int(date.replace('-', '') + str(random.randrange(100, 999)))
-    datatime = date + " " + time + ":00"
+    datatime = date[2] + "-" + date[1] + "-" + date[0] + " " + time + ":00"
     sql = "INSERT INTO meeting(meeting_id,meeting_title,meeting_location,meeting_date) " \
           "VALUES (%s,'%s','%s','%s')" % (id, title, location, datatime)
 
     edit_meeting_to_database(sql)
     add_all_staff_to_meeting(id)
-    return manag_meeting()
+    return redirect(url_for(('manag_meeting')))
 
 
-@app.route('/<Mid>', methods=['GET', 'POST'])
-def edit_meeting(Mid):
-    if request.method=='GET':
+@app.route('/<mid>', methods=['GET', 'POST'])
+def edit_meeting(mid):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    if request.method == 'GET':
         try:
-            # cur = db.cursor()
-            # sql = "select * from meeting where meeting_id=%s"%Mid
-            # db.ping(reconnect=True)
-            # cur.execute(sql)
-            # meeting = cur.fetchall()
-            # title=meeting[1]
-            # location=meeting[2]
-            # date=meeting[3]
-            # print("进入页面正常")
-            return render_template('EditMeeting.html')
+            cur = db.cursor()
+            sql = "select * from meeting where meeting_id=%s" % mid
+            db.ping(reconnect=True)
+            cur.execute(sql)
+            meeting = cur.fetchall()
+            title = meeting[0][1]
+            location = meeting[0][2]
+            datetime = meeting[0][3]
+            date = datetime.strftime("%x")
+            time = datetime.strftime("%X")[:-3]
+            return render_template('EditMeeting.html', mid=mid, title=title, location=location, date=date, time=time)
+        except Exception as e:
+            raise e
+    elif request.method == 'POST':
+        try:
+            location = request.form.get('location')
+            title = request.form.get('title')
+            date = request.form.get('date').split("/")
+            time = request.form.get('time')
+            datatime = "20" + date[2] + "-" + date[1] + "-" + date[0] + " " + time + "00"
+            sql = "update meeting set meeting_title='%s',meeting_location='%s',meeting_date='%s' where meeting_id=%s" % (
+                title, location, datatime, mid)
+            edit_meeting_to_database(sql)
+            return manag_meeting()
         except Exception as e:
             raise e
 
 
-
-
-
+@app.route('/<mid>/delmeeting', methods=['GET'])
+def del_meeting(mid):
+    sql = 'delete from meeting where meeting_id=%s' % mid
+    edit_meeting_to_database(sql)
+    return redirect(url_for(('manag_meeting')))
 
 
 # Page for department of PR ====================================================================================
