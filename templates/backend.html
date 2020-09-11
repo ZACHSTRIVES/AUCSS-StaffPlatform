@@ -19,13 +19,13 @@
   <div class="loading"><img src="static/img/loading.gif" alt="loading-img"></div>
   <!-- End Page Loading -->
   {% endblock %}
- <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- //////////////////////////////////////////////////////////////////////////// -->
   <!-- START TOP -->
   <div id="top" class="clearfix">
 
     <!-- Start App Logo -->
     <div class="applogo">
-      <a href="index.html" class="logo">AUCSS</a>
+      <a href="{{ url_for('dashbord') }}" class="logo">AUCSS</a>
     </div>
     <!-- End App Logo -->
 
@@ -58,7 +58,7 @@
 
   </div>
   <!-- END TOP -->
- <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
 <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -68,7 +68,7 @@
 
 <ul class="sidebar-panel nav">
   <li class="sidetitle">FEATURE</li>
-  <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard</a></li>
+  <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard<span class="label label-default">2</span></a></li>
 
 
 </ul>
@@ -78,9 +78,9 @@
 </div>
   {% endblock %}
 <!-- END SIDEBAR -->
-<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 
- <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START CONTENT -->
 <div class="content">
  {% block content %}
@@ -105,9 +105,11 @@
   </div>
   <!-- End Page Header -->
 {% endblock %}
+
+
 {%   block container %}
 
- <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START CONTAINER -->
 <div class="container-widget">
 
@@ -178,8 +180,12 @@
 
 </div>
 <!-- END CONTAINER -->
- <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- //////////////////////////////////////////////////////////////////////////// -->
 {% endblock %}
+
+
+
+
 <!-- Start Footer -->
 <div class="row footer">
   <div class="col-md-6 text-left">
@@ -187,19 +193,19 @@
   </div>
   <div class="col-md-6 text-right">
    Developed by Zach Wang  |  V0.0.1
-  </div> 
+  </div>
 </div>
 <!-- End Footer -->
 
 
 </div>
 <!-- End Content -->
- <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
-<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 
-<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
 <!-- ================================================
@@ -216,7 +222,7 @@ Bootstrap Core JavaScript File
 Plugin.js - Some Specific JS codes for Plugin Settings
 ================================================ -->
 <script type="text/javascript" src="static/js/plugins.js"></script>
-<script type="text/javascript" src="static/js/daterangepicker.js"></script>
+
 <!-- ================================================
 Bootstrap Select
 ================================================ -->
@@ -254,9 +260,9 @@ Easy Pie Chart
 Sparkline
 ================================================ -->
 <!-- main file -->
-<script type="text/javascript" src="static/js/sparkline/sparkline.js"></script>
+<script type="static/text/javascript" src="js/sparkline/sparkline.js"></script>
 <!-- demo codes -->
-<script type="text/javascript" src="static/js/sparkline/sparkline-plugin.js"></script>
+<script type="static/text/javascript" src="js/sparkline/sparkline-plugin.js"></script>
 
 <!-- ================================================
 Rickshaw
@@ -273,38 +279,6 @@ Moment.js
 ================================================ -->
 <script type="text/javascript" src="static/js/moment/moment.min.js"></script>
 
-<!-- ================================================
-jQuery Library
-================================================ -->
-<script type="text/javascript" src="static/js/jquery.min.js"></script>
-
-<!-- ================================================
-Bootstrap Core JavaScript File
-================================================ -->
-<script src="static/js/bootstrap/bootstrap.min.js"></script>
-
-<!-- ================================================
-Plugin.js - Some Specific JS codes for Plugin Settings
-================================================ -->
-<script type="text/javascript" src="static/js/plugins.js"></script>
-
-<!-- ================================================
-Bootstrap Select
-================================================ -->
-<script type="text/javascript" src="static/js/bootstrap-select/bootstrap-select.js"></script>
-
-<!-- ================================================
-Bootstrap Toggle
-================================================ -->
-<script type="text/javascript" src="static/js/bootstrap-toggle/bootstrap-toggle.min.js"></script>
-
-<!-- ================================================
-Moment.js
-================================================ -->
-<script type="text/javascript" src="static/js/moment/moment.min.js"></script>
-
-<!-- ================================================
-Bootstrap Date Range Picker
 
 <!-- ================================================
 Below codes are only for index widgets

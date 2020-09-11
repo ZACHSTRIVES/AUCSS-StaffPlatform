@@ -1,4 +1,6 @@
 {% extends 'backend.html' %}
+
+
 {% block loading %}
 {% endblock %}
 
@@ -19,8 +21,10 @@
         <ul class="sidebar-panel nav">
             <li class="sidetitle">人力资源部</li>
             <li><a href="{{ url_for('manag_meeting') }}"><span class="icon color15"><i class="fa fa-columns"></i></span>Manage
-                Meetings</a></li>
-            {#  <li><a href="maps.html"><span class="icon color7"><i class="fa fa-map-marker"></i></span>Maps</a></li>#}
+                Meetings | 会议管理</a></li>
+            </li>
+            <li><a href="{{ url_for('manage_leave') }}"><span class="icon color5"><i class="fa fa-group"></i></span>Leave Request | 请假审批</a>
+            </li>
         </ul>
 
     </div>

@@ -144,15 +144,16 @@ def meeting_leave():
         return redirect(url_for(('dashbord')))
     if request.method == 'GET':
         info = ''
-        info1=''
+        info1 = ''
         meetings = list_meeting_of_user(login_['email'])
         if len(meetings) == 0:
             info = "You don't have meetings at the moment where you can ask for leave."
         all_leaves = list_leave_apply_of_user(login_['email'])
-        if len(all_leaves)==0:
-            info1="You haven't asked for leave yet!"
+        if len(all_leaves) == 0:
+            info1 = "You haven't asked for leave yet!"
 
-        return render_template('MeetingLeave.html', info=info,info1=info1, meetings=meetings, leaves=all_leaves)
+        return render_template('MeetingLeave.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
+                               user_name=login_['name'])
 
 
 @app.route('/meetingleave', methods=['POST'])
@@ -184,7 +185,7 @@ def manag_meeting():
     user = login_status()
     meetings = list_all_meetings()
     issu = [user['name'], meetings]
-    return render_template('ManageMeetings.html', issue_information=issu)
+    return render_template('ManageMeetings.html', issue_information=issu, user_name=login_['name'])
 
 
 @app.route('/meetings', methods=['POST'])
@@ -226,7 +227,8 @@ def edit_meeting(mid):
             datetime = meeting[0][3]
             date = datetime.strftime("%x")
             time = datetime.strftime("%X")[:-3]
-            return render_template('EditMeeting.html', mid=mid, title=title, location=location, date=date, time=time)
+            return render_template('EditMeeting.html', user_name=login_['name'], mid=mid, title=title,
+                                   location=location, date=date, time=time)
         except Exception as e:
             raise e
     elif request.method == 'POST':
@@ -249,6 +251,33 @@ def del_meeting(mid):
     sql = 'delete from meeting where meeting_id=%s' % mid
     edit_meeting_to_database(sql)
     return redirect(url_for(('manag_meeting')))
+
+
+@app.route('/manageleaves', methods=['GET'])
+def manage_leave():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    all_leaves = list_all_leave_requests()
+    return render_template('ManageLeave.html', user_name=login_['name'], leaves=all_leaves)
+
+
+@app.route('/<mid>/<email>/decline', methods=['GET'])
+def decline_leave(mid, email):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect((url_for('dashbord')))
+    decline_status(mid, email)
+    return redirect(url_for('manage_leave'))
+
+
+@app.route('/<mid>/<email>/approve', methods=['GET'])
+def approve_leave(mid, email):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect((url_for('dashbord')))
+    approve_status(mid, email)
+    return redirect(url_for('manage_leave'))
 
 
 # Page for department of PR ====================================================================================

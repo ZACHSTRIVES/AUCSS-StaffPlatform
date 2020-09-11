@@ -1,0 +1,93 @@
+{% extends 'HRadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color9-bg"><i class="fa fa-check-square-o"></i></span>
+            <h1>Leave Requests Management</h1>
+            <h4>请假审批</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-padding">
+
+
+        <!-- Start Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        requests
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>Meeting</td>
+                                <td>Time</td>
+                                <td>Reason</td>
+                                <td>Operation</td>
+                            </tr>
+                            {% for item in leaves %}
+                                <tr>
+                                    <td>{{ item[1] }}</td>
+                                    <td>{{ item[2] }}</td>
+                                    <td>{{ item[3] }}</td>
+                                    <td>{{ item[4] }}</td>
+                                    <td>
+                                        <p><a href="{{ url_for('approve_leave',mid=item[0],email=item[5]) }}"
+                                              class="btn btn-success"><i class="fa fa-check"></i>Approve</a></p>
+                                        <a href="{{ url_for('decline_leave',mid=item[0],email=item[5]) }}"
+                                           class="btn btn-danger"><i class="fa fa-close"></i>Decline</a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        record
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>Meeting</td>
+                                <td>Time</td>
+                                <td>processor</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
+
