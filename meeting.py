@@ -75,3 +75,4 @@ def add_all_staff_to_meeting(id):
     cur.execute(sql)
     db.commit()
     cur.close()
+

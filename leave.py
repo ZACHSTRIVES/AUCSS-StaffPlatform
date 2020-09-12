@@ -78,3 +78,32 @@ def approve_status(mid, email):
 
     except Exception as e:
         print(e)
+
+
+def add_leave_to_leave_history(mid, email, processor):
+    try:
+        cur = db.cursor()
+        sql = "INSERT INTO leave_history(user_email, meeting_id, processor) VALUES ('%s',%s,'%s')" % (
+            email, mid, processor)
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        db.commit()
+        cur.close()
+    except Exception as e:
+        print(e)
+
+
+def list_all_records():
+    try:
+        cur = db.cursor()
+        sql = "SELECT U.Name,M.meeting_title,M.meeting_date,L.processor " \
+              "FROM user AS U, meeting AS M, leave_history AS L " \
+              "WHERE M.meeting_id=L.meeting_id AND U.email=L.user_email"
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        result = cur.fetchall()
+        db.commit()
+        cur.close()
+        return result
+    except Exception as e:
+        print(e)

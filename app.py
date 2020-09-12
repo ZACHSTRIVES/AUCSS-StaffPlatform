@@ -112,8 +112,10 @@ def dashbord():
         data = [login_['name'], meetings, str(len(meetings))]  # data=[0=email,1=meetings,2=len(meetings)]
         if login_['type'] == 1:  # Category 1: General Staff
             return render_template('backend.html', user_name=data[0], issue_information=data)
-        if login_['type'] == 2:  # Category 2: HR managers
+        if login_['type'] == 2:  # Category 2: HR Staff
             return hr(data)
+        if login_['type'] == 3:  # Category 3: PR Staff
+            return pr(date)
 
 
 @app.route('/logout')
@@ -152,8 +154,12 @@ def meeting_leave():
         if len(all_leaves) == 0:
             info1 = "You haven't asked for leave yet!"
 
-        return render_template('MeetingLeave.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
-                               user_name=login_['name'])
+        if login_['type']==2:
+            return render_template('MeetingLeave.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
+                                   user_name=login_['name'])
+        elif login_['type']==3:
+            return render_template('MeetingLeavePR.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
+                                   user_name=login_['name'])
 
 
 @app.route('/meetingleave', methods=['POST'])
@@ -259,7 +265,8 @@ def manage_leave():
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     all_leaves = list_all_leave_requests()
-    return render_template('ManageLeave.html', user_name=login_['name'], leaves=all_leaves)
+    leaves_record=list_all_records()
+    return render_template('ManageLeave.html', user_name=login_['name'], leaves=all_leaves, leaves_record=leaves_record)
 
 
 @app.route('/<mid>/<email>/decline', methods=['GET'])
@@ -277,10 +284,26 @@ def approve_leave(mid, email):
     if len(login_) == 0:
         return redirect((url_for('dashbord')))
     approve_status(mid, email)
-    return redirect(url_for('manage_leave'))
+    processor=login_['name']
+    add_leave_to_leave_history(mid,email,processor)
+    return redirect(url_for('manage_leave',))
 
 
 # Page for department of PR ====================================================================================
+@app.route('/pr',methods=['GET'])
+def pr(issu):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    return render_template('PRadmin.html', user_name=login_['name'],issue_information=issu)
+
+@app.route('/sponsordatabase',methods=['GET','POST'])
+def sponsor_database():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    if request.method=='GET':
+        return render_template('SponsorsDatabase.html')
 
 
 if __name__ == '__main__':
