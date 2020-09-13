@@ -3,6 +3,7 @@ from flask import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import db
 from meeting import *
+from sponsor import *
 import random
 import config
 from leave import *
@@ -15,47 +16,6 @@ app.config.from_object(config)
 # App init====================================================================================================
 @app.route('/', methods=['POST'])
 def login_page():
-    if request.method == 'POST' and len(request.form) == 5:
-        name = request.form.get('name')
-        email = request.form.get('email')
-        password_1 = request.form.get('password_1')
-        password_2 = request.form.get('password_2')
-        department = request.form.get('department')
-
-        # Incomplete information
-        if not all([email, name, password_1, password_2]):
-            flash("Incomplete information, please complete the form.")
-            return render_template('index.html')
-
-        # Password inconsistent
-        if password_1 != password_2:
-            flash("Password entries are inconsistent.")
-            return render_template('index.html')
-
-        # Hash password
-        password = generate_password_hash(password_1, method="pbkdf2:sha256", salt_length=8)
-
-        try:
-            cur = db.cursor()
-            sql = "select * from user where email = '%s'" % email
-            db.ping(reconnect=True)
-            cur.execute(sql)
-            result = cur.fetchone()
-            if result is not None:
-                flash("This email has been registered")
-                return render_template('index.html')
-            else:
-                sql = "insert into user(Name,email,password,department) VALUES ('%s','%s','%s','%s')" % (
-                    name, email, password, department)
-                db.ping(reconnect=True)
-                cur.execute(sql)
-                db.commit()
-                cur.close()
-                return render_template('backend.html')
-
-        except Exception as e:
-            raise e
-    elif request.method == 'POST' and len(request.form) == 2:
         email = request.form.get('email')
         password = request.form.get('password')
         if not all([email, password]):
@@ -100,6 +60,77 @@ def login_status():
             raise e
     # If email information does not exist, no login, return empty
     return {}
+
+@app.route('/register',methods=['GET','POST'])
+def register():
+    if request.method=='GET':
+        return render_template('register.html')
+    elif request.method=='POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password_1 = request.form.get('password_1')
+        password_2 = request.form.get('password_2')
+        code = request.form.get('code')
+        type = 0
+        department = ''
+
+        # Incomplete information
+        if not all([email, name, password_1, password_2]):
+            flash("Incomplete information, please complete the form.")
+            return redirect(url_for('register'))
+
+        # Password inconsistent
+        if password_1 != password_2:
+            flash("Password entries are inconsistent.")
+            return redirect(url_for('register'))
+
+        # Hash password
+        password = generate_password_hash(password_1, method="pbkdf2:sha256", salt_length=8)
+
+        # 检查邀请码，部门分类
+        if code == 'AUCSSHR2020':  # 人力资源部
+            department = 'HR'
+            type = 2
+        elif code == 'AUCSSPR2020':  # 外联部
+            department = 'PR'
+            type = 3
+        elif code == 'AUCSSEP2020':  # 策划部
+            department = 'EP'
+            type = 4
+        elif code == 'AUCSSMKT2020':  # 市场部
+            department = 'MKT'
+            type = 5
+        elif code == 'AUCSSOP2020':  # 运营支持部
+            department = 'OP'
+            type = 6
+        elif code == 'AUCSSSUPER':  # 主席团
+            department = 'SUPER'
+            type = 7
+        else:
+            flash("Password entries are inconsistent.")
+            return redirect(url_for('register'))
+
+        try:
+            cur = db.cursor()
+            sql = "select * from user where email = '%s'" % email
+            db.ping(reconnect=True)
+            cur.execute(sql)
+            result = cur.fetchone()
+            if result is not None:
+                flash("This email has been registered")
+                return render_template('index.html')
+            else:
+                sql = "insert into user(Name,email,password,department,type) VALUES ('%s','%s','%s','%s',%s)" % (
+                    name, email, password, department, type)
+                db.ping(reconnect=True)
+                cur.execute(sql)
+                db.commit()
+                cur.close()
+                return redirect(url_for('dashbord'))
+
+        except Exception as e:
+            raise e
+
 
 
 @app.route('/', methods=['GET'])
@@ -303,7 +334,52 @@ def sponsor_database():
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     if request.method=='GET':
-        return render_template('SponsorsDatabase.html')
+        sponsors=list_all_sponsors()
+        return render_template('SponsorsDatabase.html',user_name=login_['name'],sponsors=sponsors)
+
+    if request.method=='POST':
+        sponsor_name=request.form.get('sponsor_name')
+        sponsor_add=request.form.get('sponsor_add')
+        contact_name=request.form.get('contact_name')
+        contact=request.form.get('contact')
+        contact_type=request.form.get('contact_type')
+        staff=request.form.get('staff')
+        sponsor_comment=request.form.get('sponsor_comment')
+        sql="INSERT INTO sponsors (sponsor_name,sponsor_add,contact_name,contact,contact_type,staff,sponsor_comment)" \
+            "VALUES ('%s','%s','%s','%s','%s','%s','%s')"%(sponsor_name,sponsor_add,contact_name,contact,contact_type,staff,sponsor_comment)
+        add_sponsor(sql)
+        return redirect(url_for('sponsor_database'))
+
+@app.route('/editsponsorsid<sid>',methods=['GET','POST'])
+def edit_sponsor(sid):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    if request.method=='GET':
+        that_sponsor=get_sponsor(sid)
+        return render_template('EditSponsor.html',user_name=login_['name'],sponsor=that_sponsor)
+    elif request.method=='POST':
+        try:
+            sponsor_name = request.form.get('sponsor_name')
+            sponsor_add = request.form.get('sponsor_add')
+            contact_name = request.form.get('contact_name')
+            contact = request.form.get('contact')
+            contact_type = request.form.get('contact_type')
+            staff = request.form.get('staff')
+            sponsor_comment = request.form.get('sponsor_comment')
+            sql = "UPDATE sponsors " \
+                  "SET sponsor_name='%s',sponsor_add='%s',contact_name='%s',contact='%s',contact_type='%s',staff='%s',sponsor_comment='%s'" \
+                  "WHERE sponsor_id=%s" % (
+                  sponsor_name, sponsor_add, contact_name, contact, contact_type, staff, sponsor_comment, sid)
+            add_sponsor(sql)
+            return redirect(url_for("sponsor_database"))
+        except Exception as e:
+            raise e
+
+
+
+
+
 
 
 if __name__ == '__main__':

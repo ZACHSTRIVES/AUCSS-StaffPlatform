@@ -1,0 +1,71 @@
+{% extends 'PRadmin.html' %}
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color10-bg"><i class="fa fa-table"></i></span>
+            <h1>Sponsor Database</h1>
+            <h4>商家数据库</h4>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+
+                    <div class="panel-title">
+                        Edit Sponsor
+                    </div>
+
+                    <div class="panel-body">
+                        <form class="fieldset-form" action="" method="post">
+                            <fieldset>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="input1" class="form-label">商家名称</label>
+                                        <input type="text" class="form-control" id="input1" name="sponsor_name" value="{{ sponsor[1] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input2" class="form-label">地址</label>
+                                        <input type="text" class="form-control" id="input2" name="sponsor_add" value="{{ sponsor[2] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input3" class="form-label">联系人</label>
+                                        <input type="text" class="form-control" id="input3" name="contact_name" value="{{ sponsor[3] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input3" class="form-label">联系方式</label>
+                                        <input type="text" class="form-control" id="input3" name="contact" value="{{ sponsor[4] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input3" class="form-label">联系方式类型</label>
+                                        <input type="text" class="form-control" id="input3" name="contact_type" value="{{ sponsor[5] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input3" class="form-label">负责理事</label>
+                                        <input type="text" class="form-control" id="input3" name="staff" value="{{ sponsor[6] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">备注</label>
+                                        <textarea class="form-control" rows="3" id="textarea1" name="sponsor_comment"  >{{ sponsor[7] }}</textarea>
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                    <a href="{{ url_for('del_meeting',mid=mid) }}" class="btn btn-danger">Delete</a>
+                            </fieldset>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
