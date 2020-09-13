@@ -146,7 +146,7 @@ def dashbord():
         if login_['type'] == 2:  # Category 2: HR Staff
             return hr(data)
         if login_['type'] == 3:  # Category 3: PR Staff
-            return pr(date)
+            return pr(data)
 
 
 @app.route('/logout')
@@ -326,6 +326,7 @@ def pr(issu):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
+
     return render_template('PRadmin.html', user_name=login_['name'],issue_information=issu)
 
 @app.route('/sponsordatabase',methods=['GET','POST'])
@@ -378,9 +379,14 @@ def edit_sponsor(sid):
 
 
 
+@app.route('/deletesponsor<sid>',methods=['GET'])
+def delete_sponsor(sid):
+    sql = 'delete from sponsors where sponsor_id=%s' % sid
+    add_sponsor(sql)
+    return redirect(url_for(('sponsor_database')))
 
 
-
+# Page for department of EP ====================================================================================
 
 if __name__ == '__main__':
     app.run()
