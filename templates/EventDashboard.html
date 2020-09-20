@@ -1,0 +1,80 @@
+{% extends 'EPadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color5-bg"><i class="fa fa-cubes"></i></span>
+            <h1>Event Dashboard</h1>
+            <h4>股票模拟</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-widget">
+        <div class="row">
+            <!-- Start Top Stats -->
+            <ul class="topstats clearfix">
+                <li class="arrow"></li>
+
+                <li class="col-xs-6 col-lg-2">
+                    <span class="title"><i class="fa fa-clock-o"></i> 活动时间</span>
+                    <h3>2020-10-28</h3>
+                    <span class="diff">18:00</span>
+                </li>
+
+                <li class="col-xs-6 col-lg-2">
+                    <span class="title"><i class="fa fa-users"></i> 报名人数</span>
+                    <h3>67</h3>
+                    <span class="diff"><b class="color-down"><i
+                            class="fa fa-caret-down"></i>3</b> from yesterday</span>
+                </li>
+
+                <li class="col-xs-6 col-lg-2">
+                    <span class="title"><i class="fa fa-dot-circle-o"></i> 目标人数</span>
+                    <h3>80</h3>
+                </li>
+
+
+            </ul>
+            <!-- End Top Stats -->
+
+
+        </div>
+        <!-- Start Row -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Start Quick Menu -->
+                <ul class="panel quick-menu clearfix">
+                    <li class="col-sm-2">
+                        <a href="#"><i class="fa fa-cogs"></i>编辑活动</a>
+                    </li>
+                    <li class="col-sm-2">
+                        <a href="#"><i class="fa fa-users"></i>报名</a>
+                    </li>
+                    <li class="col-sm-2">
+                        <a href="#"><i class="fa fa-list"></i>待办事项</a>
+                    </li>
+                    <li class="col-sm-2">
+                        <a href="#"><i class="fa fa-file-text-o"></i>备忘录</a>
+                    </li>
+                    <li class="col-sm-2">
+                        <a href="#"><i class="fa fa-cc-visa"></i>采购清单</a>
+                    </li>
+                    <li class="col-sm-2">
+                        <a href="#"><i class="fa fa-file-pdf-o"></i>策划案</a>
+                    </li>
+                </ul>
+                <!-- End Quick Menu -->
+
+            </div>
+        </div>
+        <!-- End Row -->
+
+    </div>
+{% endblock %}

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
+  <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
+  <title>Kode</title>
+
+  <!-- ========== Css Files ========== -->
+  <link href="static/css/root.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+   <!-- START TOP -->
+  <div id="top" class="clearfix">
+
+    <!-- Start App Logo -->
+    <div class="applogo">
+      <a href="{{ url_for('dashbord') }}" class="logo">AUCSS</a>
+    </div>
+    <!-- End App Logo -->
+
+    <!-- Start Sidebar Show Hide Button -->
+    <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
+    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
+    <!-- End Sidebar Show Hide Button -->
+
+
+
+    <!-- Start Top Right -->
+    <ul class="top-right">
+
+
+
+    <li class="dropdown link">
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox">
+          <b>
+              zach
+{#          {{ user_name }}#}
+              </b>
+          <span class="caret"></span></a>
+        <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
+          <li role="presentation" class="dropdown-header">Profile</li>
+          <li><a href="{{ url_for('logout') }}"><i class="fa falist fa-power-off"></i> Logout</a> </li>
+        </ul>
+    </li>
+
+    </ul>
+    <!-- End Top Right -->
+
+  </div>
+  <!-- END TOP -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START SIDEBAR -->
+<div class="sidebar clearfix">
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">FEATURE</li>
+            <li><a href="{{ url_for('dashbord') }}"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard</a>
+            </li>
+            <li><a href="{{ url_for('meeting_leave') }}"><span class="icon color5"><i class="fa fa-group"></i></span>Meeting
+                Leave | 请假</a>
+            </li>
+
+
+        </ul>
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">策划部</li>
+            <li><a href="{{ url_for('manag_meeting') }}"><span class="icon color15"><i class="fa fa-columns"></i></span>
+                | 活动日程a></li>
+            </li>
+
+        </ul>
+
+    </div>
+<!-- END SIDEBAR -->
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTENT -->
+<div class="content">
+
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTAINER -->
+<div class="calendar-layout clearfix">
+
+  <div class="col-md-2">
+
+    <div id='external-events'>
+      <h6 class="font-title"><i class="fa fa-arrows"></i> DRAGGABLE EVENTS</h6>
+      <p>Drag into calendar</p>
+      <div class='fc-event'>Meeting with Developer Team</div>
+      <div class='fc-event'>Office Party</div>
+      <div class='fc-event'>March Invoices</div>
+      <div class='fc-event'>Call John</div>
+      <div class='fc-event'>Dinner with Team</div>
+      <div class='fc-event'>Design an iOS App</div>
+      <div class='fc-event'>Make a Sandwich</div>
+      <div class='fc-event'>Meeting with Customers</div>
+
+
+    </div>
+
+  </div>
+
+  <div class="col-md-10">
+    <div id='calendar'></div>
+  </div>
+
+    
+
+
+
+
+</div>
+<!-- END CONTAINER -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+<!-- Start Footer -->
+<div class="row footer">
+  <div class="col-md-6 text-left">
+  Copyright © 2015 <a href="https://shop303982252.taobao.com/">源代码设计</a>All rights reserved.
+  </div>
+  <div class="col-md-6 text-right">
+  collect and Arrangement by <a href="https://shop303982252.taobao.com/">源代码设计</a>
+  </div> 
+</div>
+<!-- End Footer -->
+
+</div>
+<!-- End Content -->
+
+
+
+
+<!-- ================================================
+jQuery Library
+================================================ -->
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+
+<!-- ================================================
+Bootstrap Core JavaScript File
+================================================ -->
+<script src="static/js/bootstrap/bootstrap.min.js"></script>
+
+<!-- ================================================
+Plugin.js - Some Specific JS codes for Plugin Settings
+================================================ -->
+<script type="text/javascript" src="static/js/plugins.js"></script>
+
+<!-- ================================================
+jQuery UI
+================================================ -->
+<script type="text/javascript" src="static/js/jquery-ui/jquery-ui.min.js"></script>
+
+<!-- ================================================
+Moment.js
+================================================ -->
+<script type="text/javascript" src="static/js/moment/moment.min.js"></script>
+
+<!-- ================================================
+Full Calendar
+================================================ -->
+<script type="text/javascript" src="static/js/full-calendar/fullcalendar.js"></script>
+
+
+<script>
+
+  $(document).ready(function() {
+    
+
+    /* initialize the external events
+    -----------------------------------------------------------------*/
+    $('#external-events .fc-event').each(function() {
+
+      // store data so the calendar knows to render an event upon drop
+      $(this).data('event', {
+        title: $.trim($(this).text()), // use the element's text as the event title
+        stick: true // maintain when user navigates (see docs on the renderEvent method)
+      });
+
+      // make the event draggable using jQuery UI
+      $(this).draggable({
+        zIndex: 999,
+        revert: true,      // will cause the event to go back to its
+        revertDuration: 0  //  original position after the drag
+      });
+
+    });
+
+
+    /* initialize the calendar
+    -----------------------------------------------------------------*/
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      defaultDate: '2015-02-12',
+      editable: true,
+      droppable: true, // this allows things to be dropped onto the calendar
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+        {
+          title: 'All Day Event',
+          start: '2015-02-01',
+          color: '#9A80B9'
+        },
+        {
+          title: 'Long Event',
+          start: '2015-02-07',
+          end: '2015-02-10',
+          color: '#EF4836'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2015-02-09T16:00:00'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2015-02-16T16:00:00'
+        },
+        {
+          title: 'Conference',
+          start: '2015-02-3',
+          end: '2015-02-5',
+          color: '#E99844'
+        },
+        {
+          title: 'Meeting',
+          start: '2015-02-12T10:30:00',
+          end: '2015-02-12T12:30:00'
+        },
+        {
+          title: 'Lunch',
+          start: '2015-02-12T12:00:00'
+        },
+        {
+          title: 'Meeting',
+          start: '2015-02-12T14:30:00'
+        },
+        {
+          title: 'Happy Hour',
+          start: '2015-02-12T17:30:00'
+        },
+        {
+          title: 'Dinner',
+          start: '2015-02-12T20:00:00'
+        },
+        {
+          title: 'Birthday Party',
+          start: '2015-02-13T07:00:00',
+          color: '#26A65B'
+        },
+        {
+          title: 'Buy This Theme',
+          url: 'http://themeforest.net/item/kode-responsive-admin-dashboard-template-/10814250?ref=egemem',
+          start: '2015-02-22',
+          color:'#D2527F'
+        }
+      ]
+    });
+    
+  });
+
+
+</script>
+
+
+
+</body>
+</html>

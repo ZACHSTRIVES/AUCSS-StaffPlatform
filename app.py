@@ -147,6 +147,8 @@ def dashbord():
             return hr(data)
         if login_['type'] == 3:  # Category 3: PR Staff
             return pr(data)
+        if login_['type'] == 4:  # Category 4: EP Staff
+            return ep(data)
 
 
 @app.route('/logout')
@@ -190,6 +192,9 @@ def meeting_leave():
                                    user_name=login_['name'])
         elif login_['type']==3:
             return render_template('MeetingLeavePR.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
+                                   user_name=login_['name'])
+        elif login_['type']==4:
+            return render_template('MeetingLeaveEP.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
                                    user_name=login_['name'])
 
 
@@ -387,6 +392,26 @@ def delete_sponsor(sid):
 
 
 # Page for department of EP ====================================================================================
+@app.route('/ep',methods=['GET'])
+def ep(issu):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+
+    return render_template('EPadmin.html', user_name=login_['name'],issue_information=issu)
+
+
+@app.route('/EventDashboard',methods=['GET'])
+def event_dashboard():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    return render_template('EventDashboard.html',user_name=login_['name'])
+
+
+@app.route('/test')
+def test():
+    return render_template('EventSignUpFinished.html',name='Zach')
 
 if __name__ == '__main__':
     app.run()
