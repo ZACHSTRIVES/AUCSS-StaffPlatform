@@ -1,0 +1,29 @@
+{% extends 'EPadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color7-bg"><i class="fa fa-list-alt"></i></span>
+            <h1>{{ event[1] }}</h1>
+            <h4>活动报名管理系统</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <ul class="panel quick-menu clearfix">
+            <li class="col-sm-2">
+                <a href="{{ url_for('start_sign_up',id=event[0]) }}"><i class="fa fa-power-off"></i>开启报名</a>
+            </li>
+             <li class="col-sm-2">
+                <a href="{{ url_for('event_dashboard',id=event[0]) }}"><i class="fa fa-reply" ></i>返回</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

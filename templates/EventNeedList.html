@@ -1,0 +1,171 @@
+{% extends 'EPadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color14-bg"><i class="fa fa-cc-visa"></i></span>
+            <h1>{{ event[1] }}</h1>
+            <h4>采购清单</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        新建清单
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="panel-body table-responsive">
+                        <p>完成清单并且确认无误后点击 <code>SEND</code>按钮，清单将会发送给运营支持部.
+                        </p>
+                        <a href="#" data-toggle="modal" data-target="#itemModal">
+                            <button type="button" class="btn btn-option3 btn-xs"><i class="fa fa-plus"></i>ADD</button>
+                        </a>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td>Item</td>
+                                <td>Qty.</td>
+                                <td>comment</td>
+                                <td><i class="fa fa-trash"></i></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in items %}
+                                <tr>
+                                    <td>{{ item[1] }}</td>
+                                    <td>{{ item[2] }}</td>
+                                    <td>{{ item[3] }}</td>
+                                    <td><a href="{{ url_for('del_item',eventid=event[0],id=item[0]) }}"><i
+                                            class="fa fa-remove"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <a href="{{ url_for('sent_item',id=event[0]) }}"><i class="btn btn-default">SEND</i></a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        已发送清单
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="panel-body table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td>Item</td>
+                                <td>Qty.</td>
+                                <td>Comment</td>
+                                <td>Purchase</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in sent_items %}
+                                <tr>
+                                    <td>{{ item[1] }}</td>
+                                    <td>{{ item[2] }}</td>
+                                    <td>{{ item[3] }}</td>
+                                    {% if item[6]=='Y' %}
+                                        <td><i class="fa fa-check"></i></td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Item</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="editEvent01"
+                                   class="col-sm-2 control-label form-label">Item</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="editEvent01"
+                                       name="item">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="editEvent02"
+                                   class="col-sm-2 control-label form-label">Qty.</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="editEvent02"
+                                       name="qty" style="width:50px">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment" class="col-sm-2 control-label form-label">Textarea</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" id="comment" name="comment"
+                                ></textarea>
+                            </div>
+                        </div>
+
+
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close
+                        </button>
+                        <button type="submit" class="btn btn-default">Add
+                        </button>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    请按照格式填写时间及日期！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Moda Code -->
+
+
+{% endblock %}

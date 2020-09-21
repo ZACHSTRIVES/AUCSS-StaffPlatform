@@ -7,30 +7,26 @@
 
   <!-- ========== Css Files ========== -->
   <link href="static/css/root.css" rel="stylesheet">
-  <style type="text/css">
-    body{background-image:url('static/img/logobackground.jpg') ;background-size: 150%;}
+ <style type="text/css">
+    body{background:white;}
   </style>
   </head>
   <body>
 
     <div class="login-form">
-      <form action="#">
+      <form action="#" method="post">
         <div class="top">
           <img src="static/img/logo.png" alt="icon" style="width:100px;" >
-          <h1>股票模拟</h1>
+          <h1>{{ event }}</h1>
           <h4>Event Sign Up</h4>
         </div>
         <div class="form-area">
           <div class="group">
-            <input type="text" class="form-control" placeholder="Your Name">
+            <input type="text" name='name' class="form-control" placeholder="Your Name">
           </div>
 
             <div class="group">
             <input type="text" name="email" class="form-control" placeholder="Email">
-          </div>
-
-            <div class="group">
-            <input type="text" name="num" class="form-control" placeholder="Membership Number">
           </div>
 
             <div class="group">
@@ -40,7 +36,7 @@
             <div class="group">
             <input type="text" name="contact" class="form-control" placeholder="Contact">
           </div>
-          <button  type="" class="btn btn-default btn-block">SIGN UP</button>
+          <button  type="submit" class="btn btn-default btn-block">SIGN UP</button>
         </div>
       </form>
       <div class="footer-links row">

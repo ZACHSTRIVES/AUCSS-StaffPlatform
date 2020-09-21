@@ -1,0 +1,70 @@
+{% extends 'EPadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color7-bg"><i class="fa fa-list-alt"></i></span>
+            <h1>{{ event[1] }}</h1>
+            <h4>活动报名管理系统</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <ul class="panel quick-menu clearfix">
+            <li class="col-sm-2">
+                <a href="{{ url_for('end_sign_up',id=event[0]) }}"><i class="fa fa-power-off" style="color: red"></i>结束报名</a>
+            </li>
+            <li class="col-sm-2">
+                <a href="{{ url_for('event_dashboard',id=event[0]) }}"><i class="fa fa-reply" ></i>返回</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+
+                <div class="panel-title">
+                    已报名会员
+                </div>
+
+                <div class="panel-body table-responsive">
+                    <p>Sign Up URL:<code href="http://aucss.co.nz/EventSignUpid{{ event[0] }}">http://aucss.co.nz/EventSignUpid{{ event[0] }}</code>,
+                        总计{{ count }}人报名.</p>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Wechat ID</td>
+                            <td>Contact</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for m in member %}
+                            <tr>
+                                <td>{{ m[1]}}</td>
+                                <td>{{ m[2]}}</td>
+                                <td>{{ m[3]}}</td>
+                                <td>{{ m[4]}}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

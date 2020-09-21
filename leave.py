@@ -104,6 +104,8 @@ def list_all_records():
         result = cur.fetchall()
         db.commit()
         cur.close()
-        return result
+
     except Exception as e:
         print(e)
+
+

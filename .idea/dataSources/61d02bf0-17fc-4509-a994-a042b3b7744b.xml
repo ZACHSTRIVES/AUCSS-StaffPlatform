@@ -915,139 +915,227 @@ SELECT|sys.sys_config:null
       <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE!
 </ObjectGrants>
     </user>
-    <table id="286" parent="2" name="leave_history"/>
-    <table id="287" parent="2" name="meeting"/>
-    <table id="288" parent="2" name="meeting_leave"/>
-    <table id="289" parent="2" name="need_to_meeting"/>
-    <table id="290" parent="2" name="sponsors"/>
-    <table id="291" parent="2" name="user"/>
-    <column id="292" parent="286" name="user_email">
-      <Position>1</Position>
-      <DataType>char(100)|0s</DataType>
-    </column>
-    <column id="293" parent="286" name="meeting_id">
-      <Position>2</Position>
-      <DataType>double|0s</DataType>
-    </column>
-    <column id="294" parent="286" name="processor">
-      <Position>3</Position>
-      <DataType>char(30)|0s</DataType>
-    </column>
-    <column id="295" parent="287" name="meeting_id">
-      <Position>1</Position>
-      <DataType>double|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="296" parent="287" name="meeting_title">
-      <Position>2</Position>
-      <DataType>char(100)|0s</DataType>
-    </column>
-    <column id="297" parent="287" name="meeting_location">
-      <Position>3</Position>
-      <DataType>char(100)|0s</DataType>
-    </column>
-    <column id="298" parent="287" name="meeting_date">
-      <Position>4</Position>
-      <DataType>datetime|0s</DataType>
-      <DefaultExpression>&apos;2020-12-12 18:00:00&apos;</DefaultExpression>
-    </column>
-    <column id="299" parent="288" name="meeting_id">
-      <Position>1</Position>
-      <DataType>double|0s</DataType>
-    </column>
-    <column id="300" parent="288" name="user_email">
-      <Position>2</Position>
-      <DataType>char(100)|0s</DataType>
-    </column>
-    <column id="301" parent="288" name="reason">
-      <Position>3</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="302" parent="288" name="status">
-      <Position>4</Position>
-      <DataType>char(30)|0s</DataType>
-    </column>
-    <column id="303" parent="289" name="user_email">
-      <Position>1</Position>
-      <DataType>char(100)|0s</DataType>
-    </column>
-    <column id="304" parent="289" name="meeting_id">
-      <Position>2</Position>
-      <DataType>double|0s</DataType>
-    </column>
-    <column id="305" parent="290" name="sponsor_id">
+    <table id="286" parent="2" name="event"/>
+    <table id="287" parent="2" name="event_need_items"/>
+    <table id="288" parent="2" name="event_sign_up"/>
+    <table id="289" parent="2" name="leave_history"/>
+    <table id="290" parent="2" name="meeting"/>
+    <table id="291" parent="2" name="meeting_leave"/>
+    <table id="292" parent="2" name="need_to_meeting"/>
+    <table id="293" parent="2" name="sponsors"/>
+    <table id="294" parent="2" name="user"/>
+    <column id="295" parent="286" name="event_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="306" parent="290" name="sponsor_name">
+    <column id="296" parent="286" name="event_title">
+      <Position>2</Position>
+      <DataType>char(30)|0s</DataType>
+    </column>
+    <column id="297" parent="286" name="target_member">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="298" parent="286" name="event_time">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+    </column>
+    <column id="299" parent="286" name="sign_up_status">
+      <Position>5</Position>
+      <DataType>char(30)|0s</DataType>
+      <DefaultExpression>&apos;NOT_START&apos;</DefaultExpression>
+    </column>
+    <key id="300" parent="286" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>event_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="301" parent="287" name="item_id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="302" parent="287" name="item">
+      <Position>2</Position>
+      <DataType>char(30)|0s</DataType>
+    </column>
+    <column id="303" parent="287" name="qty">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="304" parent="287" name="comment">
+      <Position>4</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="305" parent="287" name="event_id">
+      <Position>5</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="306" parent="287" name="sent">
+      <Position>6</Position>
+      <DataType>char(2)|0s</DataType>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+    </column>
+    <column id="307" parent="287" name="buy">
+      <Position>7</Position>
+      <DataType>char(1)|0s</DataType>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+    </column>
+    <key id="308" parent="287" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>item_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="309" parent="288" name="event_id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="310" parent="288" name="name">
+      <Position>2</Position>
+      <DataType>char(30)|0s</DataType>
+    </column>
+    <column id="311" parent="288" name="email">
+      <Position>3</Position>
+      <DataType>char(30)|0s</DataType>
+    </column>
+    <column id="312" parent="288" name="wechat_id">
+      <Position>4</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="313" parent="288" name="contact">
+      <Position>5</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="314" parent="289" name="user_email">
+      <Position>1</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="315" parent="289" name="meeting_id">
+      <Position>2</Position>
+      <DataType>double|0s</DataType>
+    </column>
+    <column id="316" parent="289" name="processor">
+      <Position>3</Position>
+      <DataType>char(30)|0s</DataType>
+    </column>
+    <column id="317" parent="290" name="meeting_id">
+      <Position>1</Position>
+      <DataType>double|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="318" parent="290" name="meeting_title">
       <Position>2</Position>
       <DataType>char(100)|0s</DataType>
     </column>
-    <column id="307" parent="290" name="sponsor_add">
+    <column id="319" parent="290" name="meeting_location">
       <Position>3</Position>
       <DataType>char(100)|0s</DataType>
     </column>
-    <column id="308" parent="290" name="contact_name">
+    <column id="320" parent="290" name="meeting_date">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>&apos;2020-12-12 18:00:00&apos;</DefaultExpression>
+    </column>
+    <column id="321" parent="291" name="meeting_id">
+      <Position>1</Position>
+      <DataType>double|0s</DataType>
+    </column>
+    <column id="322" parent="291" name="user_email">
+      <Position>2</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="323" parent="291" name="reason">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="324" parent="291" name="status">
       <Position>4</Position>
       <DataType>char(30)|0s</DataType>
     </column>
-    <column id="309" parent="290" name="contact">
+    <column id="325" parent="292" name="user_email">
+      <Position>1</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="326" parent="292" name="meeting_id">
+      <Position>2</Position>
+      <DataType>double|0s</DataType>
+    </column>
+    <column id="327" parent="293" name="sponsor_id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="328" parent="293" name="sponsor_name">
+      <Position>2</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="329" parent="293" name="sponsor_add">
+      <Position>3</Position>
+      <DataType>char(100)|0s</DataType>
+    </column>
+    <column id="330" parent="293" name="contact_name">
+      <Position>4</Position>
+      <DataType>char(30)|0s</DataType>
+    </column>
+    <column id="331" parent="293" name="contact">
       <Position>5</Position>
       <DataType>char(50)|0s</DataType>
       <DefaultExpression>&apos;&lt;none&gt;&apos;</DefaultExpression>
     </column>
-    <column id="310" parent="290" name="contact_type">
+    <column id="332" parent="293" name="contact_type">
       <Position>6</Position>
       <DataType>char(30)|0s</DataType>
       <DefaultExpression>&apos;&lt;none&gt;&apos;</DefaultExpression>
     </column>
-    <column id="311" parent="290" name="staff">
+    <column id="333" parent="293" name="staff">
       <Position>7</Position>
       <DataType>char(30)|0s</DataType>
       <DefaultExpression>&apos;&lt;none&gt;&apos;</DefaultExpression>
     </column>
-    <column id="312" parent="290" name="sponsor_comment">
+    <column id="334" parent="293" name="sponsor_comment">
       <Position>8</Position>
       <DataType>char(150)|0s</DataType>
     </column>
-    <key id="313" parent="290" name="PRIMARY">
+    <key id="335" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sponsor_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="314" parent="291" name="Name">
+    <column id="336" parent="294" name="Name">
       <Position>1</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="315" parent="291" name="email">
+    <column id="337" parent="294" name="email">
       <Position>2</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="316" parent="291" name="password">
+    <column id="338" parent="294" name="password">
       <Position>3</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="317" parent="291" name="department">
+    <column id="339" parent="294" name="department">
       <Position>4</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="318" parent="291" name="type">
+    <column id="340" parent="294" name="type">
       <Position>5</Position>
       <DataType>int|0s</DataType>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <index id="319" parent="291" name="user_email_uindex">
+    <index id="341" parent="294" name="user_email_uindex">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="320" parent="291" name="user_email_uindex">
+    <key id="342" parent="294" name="user_email_uindex">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>user_email_uindex</UnderlyingIndexName>
     </key>
