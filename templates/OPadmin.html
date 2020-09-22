@@ -1,0 +1,37 @@
+{% extends 'backend.html' %}
+
+
+{% block loading %}
+{% endblock %}
+
+{% block siderbar %}
+
+    <div class="sidebar clearfix">
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">FEATURE</li>
+            <li><a href="{{ url_for('dashbord') }}"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard</a>
+            </li>
+            <li><a href="{{ url_for('meeting_leave') }}"><span class="icon color5"><i class="fa fa-group"></i></span>Meeting
+                Leave | 请假</a>
+            </li>
+
+
+        </ul>
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">运营支持部</li>
+            <li><a href="#"><span class="icon color15"><i class="fa fa-cc-visa"></i></span>活动采购清单<span class="caret"></span></a>
+                <ul>
+                    {% for item in events %}
+                        <li><a href="{{ url_for("event_needs_op_page",id=item[0]) }}">{{ item[1] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            </li>
+
+        </ul>
+
+    </div>
+{% endblock %}
+

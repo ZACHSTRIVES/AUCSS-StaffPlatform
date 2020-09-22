@@ -164,3 +164,75 @@ def change_sent_status(id):
         cur.close()
     except Exception as e:
         print(e)
+
+
+def get_sent_items_not_buy(id):
+    try:
+        cur = db.cursor()
+        sql = "SELECT * FROM event_need_items WHERE event_id=%s AND sent='Y' AND buy='N'" % id
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        result = cur.fetchall()
+        db.commit()
+        cur.close()
+        return result
+    except Exception as e:
+        print(e)
+
+
+def get_sent_items_have_bought(id):
+    try:
+        cur = db.cursor()
+        sql = "SELECT * FROM event_need_items WHERE event_id=%s AND sent='Y' AND buy='Y'" % id
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        result = cur.fetchall()
+        db.commit()
+        cur.close()
+        return result
+    except Exception as e:
+        print(e)
+
+
+def finish_buy_item(id,staff):
+    try:
+        cur = db.cursor()
+        sql = "UPDATE event_need_items SET buy='Y',staff='%s' WHERE item_id=%s" % (staff,id)
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        db.commit()
+        cur.close()
+    except Exception as e:
+        print(e)
+
+def classification_of_event(events):
+    try:
+        cur = db.cursor()
+        sql = "SELECT * FROM event_sign_up"
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        result=cur.fetchall()
+        db.commit()
+        cur.close()
+
+        member_list=[]
+        count=0
+        for i in events:
+            member_list.append([i[0]])
+            for j in result:
+                if j[0]==i[0]:
+                    member_list[count].append(j)
+            count+=1
+
+
+        return member_list
+
+    except Exception as e:
+        print(e)
+
+
+# def test():
+#     events=fetch_all_event_id_from_database()
+#     print(classification_of_event(events))
+#
+# test()

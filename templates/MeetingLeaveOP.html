@@ -1,0 +1,97 @@
+{% extends 'OPadmin.html' %}
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color9-bg"><i class="fa fa-check-square-o"></i></span>
+            <h1>Asking for a meeting leave</h1>
+            <h4>会议请假</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-title">
+                        Leave Processing Status
+                    </div>
+
+                    <div class="panel-body table-responsive">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td>Meeting Title</td>
+                                <td>Time</td>
+                                <td>Status</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for apply in leaves %}
+                                    <tr>
+                                    <td>{{ apply[0] }}</td>
+                                    <td>{{ apply[1] }}</td>
+                                    <td>{{ apply[2] }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    {{ info1 }}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+
+                    <div class="panel-title">
+                        apply for meeting leave
+                    </div>
+
+                    <div class="panel-body">
+                        <form class="fieldset-form" action="" method="post">
+                            <fieldset>
+                                <h4>Select Meeting</h4>
+                                {{ info }}
+                                {% for meeting in meetings %}
+                                    <div class="radio">
+                                        <input type="radio" name="radio1" id="{{ meeting[0] }}"
+                                               value="{{ meeting[0] }}">
+                                        <label for="{{ meeting[0] }}">
+                                            {{ meeting[1] }} {{ meeting[3] }}
+                                        </label>
+                                    </div>
+
+                                {% endfor %}
+
+
+                                <div class="form-group">
+                                    <label class="form-label">Reason</label>
+                                    <textarea class="form-control" rows="3" name="reason"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-default">Apply</button>
+                            </fieldset>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+

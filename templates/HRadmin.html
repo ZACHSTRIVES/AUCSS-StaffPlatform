@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block siderbar %}
-
     <div class="sidebar clearfix">
 
         <ul class="sidebar-panel nav">
@@ -25,8 +24,11 @@
             </li>
             <li><a href="{{ url_for('manage_leave') }}"><span class="icon color5"><i class="fa fa-group"></i></span>Leave Request | 请假审批</a>
             </li>
+            <li><a href="{{ url_for('notification') }}"><span class="icon color5"><i class="fa fa-bullhorn"></i></span>Notification | 发送通知</a>
+            </li>
+            <li><a href="{{ url_for('event_signup_info') }}"><span class="icon color5"><i class="fa fa-info"></i></span>Event SignUp | 活动报名</a>
+            </li>
         </ul>
-
     </div>
 {% endblock %}
 

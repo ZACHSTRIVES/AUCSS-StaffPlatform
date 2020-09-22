@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
-  <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
-  <title>AUCSS | STAFF PLATFORM</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
+    <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive,"/>
+    <title>AUCSS | STAFF PLATFORM</title>
 
-  <!-- ========== Css Files ========== -->
-  <link href="static/css/root.css" rel="stylesheet">
+    <!-- ========== Css Files ========== -->
+    <link href="static/css/root.css" rel="stylesheet">
 
 
-  </head>
-  <body>
-  {% block loading %}
-  <!-- Start Page Loading -->
-  <div class="loading"><img src="static/img/loading.gif" alt="loading-img"></div>
-  <!-- End Page Loading -->
-  {% endblock %}
- <!-- //////////////////////////////////////////////////////////////////////////// -->
-  <!-- START TOP -->
-  <div id="top" class="clearfix">
+</head>
+<body>
+{% block loading %}
+    <!-- Start Page Loading -->
+    <div class="loading"><img src="static/img/loading.gif" alt="loading-img"></div>
+    <!-- End Page Loading -->
+{% endblock %}
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START TOP -->
+<div id="top" class="clearfix">
 
     <!-- Start App Logo -->
     <div class="applogo">
-      <a href="{{ url_for('dashbord') }}" class="logo">AUCSS</a>
+        <a href="{{ url_for('dashbord') }}" class="logo">AUCSS</a>
     </div>
     <!-- End App Logo -->
 
@@ -35,165 +36,222 @@
     <!-- End Sidebar Show Hide Button -->
 
 
-
     <!-- Start Top Right -->
     <ul class="top-right">
 
 
-
-    <li class="dropdown link">
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox">
-          <b>
-          {{ user_name }}
-              </b>
-          <span class="caret"></span></a>
-        <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
-          <li role="presentation" class="dropdown-header">Profile</li>
-          <li><a href="{{ url_for('logout') }}"><i class="fa falist fa-power-off"></i> Logout</a> </li>
-        </ul>
-    </li>
+        <li class="dropdown link">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox">
+                <b>
+                    {{ user_name }}
+                </b>
+                <span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
+                <li role="presentation" class="dropdown-header">Profile</li>
+                <li><a href="{{ url_for('logout') }}"><i class="fa falist fa-power-off"></i> Logout</a></li>
+            </ul>
+        </li>
 
     </ul>
     <!-- End Top Right -->
 
-  </div>
-  <!-- END TOP -->
- <!-- //////////////////////////////////////////////////////////////////////////// -->
+</div>
+<!-- END TOP -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
 <!-- //////////////////////////////////////////////////////////////////////////// -->
-  {% block siderbar %}
-<!-- START SIDEBAR -->
-<div class="sidebar clearfix">
+{% block siderbar %}
+    <!-- START SIDEBAR -->
+    <div class="sidebar clearfix">
 
-<ul class="sidebar-panel nav">
-  <li class="sidetitle">FEATURE</li>
-  <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard<span class="label label-default">2</span></a></li>
-
-
-</ul>
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">FEATURE</li>
+            <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard<span
+                    class="label label-default">2</span></a></li>
 
 
+        </ul>
 
-</div>
-  {% endblock %}
+
+    </div>
+{% endblock %}
 <!-- END SIDEBAR -->
 <!-- //////////////////////////////////////////////////////////////////////////// -->
 
- <!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START CONTENT -->
 <div class="content">
- {% block content %}
-  <!-- Start Page Header -->
-  <div class="page-header">
-    <h1 class="title">Dashboard</h1>
-      <ol class="breadcrumb">
-        <li class="active">Welcome to the AUCSS staff platform.</li>
-    </ol>
+    {% block content %}
+        <!-- Start Page Header -->
+        <div class="page-header">
+            <h1 class="title">Dashboard</h1>
+            <ol class="breadcrumb">
+                <li class="active">Welcome to the AUCSS staff platform.</li>
+            </ol>
 
-    <!-- Start Page Header Right Div -->
+            <!-- Start Page Header Right Div -->
 
-    <!-- End Page Header Right Div -->
+            <!-- End Page Header Right Div -->
 
-  </div>
-  <!-- End Page Header -->
-{% endblock %}
-
-
-{%   block container %}
-
- <!-- //////////////////////////////////////////////////////////////////////////// -->
-<!-- START CONTAINER -->
-<div class="container-widget">
+        </div>
+        <!-- End Page Header -->
+    {% endblock %}
 
 
-  <!-- Start Second Row -->
-  <div class="row">
-      <!-- Start 会议 -->
-    <div class="col-md-12 col-lg-6">
-      <div class="panel panel-widget">
-        <div class="panel-title">
-          MEETINGS
-            <span class="label label-warning">
-                {% for item in issue_information[2]%}
+    {% block container %}
+
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+        <!-- START CONTAINER -->
+        <div class="container-widget">
+            <div class="row">
+                <!-- Start Panel -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="panel panel-danger">
+
+                        <div class="panel-title">
+                            notice <span class="badge">.From Zach</span>
+                            <ul class="panel-tools">
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="panel-heading">关于使用中出现的BUG</div>
+
+                        <div class="panel-body">
+                            测试版本，如果在使用过程中发现任何BUG以及问题，或者你对网站的开发有任何的建议请点击下方链接填写Feedback，请将问题描写清楚，感谢！
+                            <p><a href="{{ url_for('bug_feedback') }}">BUG Feedback</a></p>
+                        </div>
+
+                        <div class="panel-footer"></div>
+
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+            {% for i in notification %}
+                 <div class="row">
+                <!-- Start Panel -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="panel panel-info">
+
+                        <div class="panel-title">
+                            notice <span class="badge">.From {{ i[3] }}</span>
+                            <ul class="panel-tools">
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="panel-heading">{{i[1]}}</div>
+
+                        <div class="panel-body">
+                            {{ i[2] }}
+                        </div>
+
+                        <div class="panel-footer"></div>
+
+                    </div>
+                </div>
+                <!-- End Panel -->
+            </div>
+
+
+
+            {% endfor %}
+
+
+
+
+
+
+
+            <!-- Start Second Row -->
+            <div class="row">
+                <!-- Start 会议 -->
+                <div class="col-md-12 col-lg-6">
+                    <div class="panel panel-widget">
+                        <div class="panel-title">
+                            MEETINGS
+                            <span class="label label-warning">
+                {% for item in issue_information[2] %}
                     {{ item }}
                 {% endfor %}
             </span>
-          <ul class="panel-tools">
-            <li><a class="icon search-tool"><i class="fa fa-search"></i></a></li>
-            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
-            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
-            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
-          </ul>
+                            <ul class="panel-tools">
+                                <li><a class="icon search-tool"><i class="fa fa-search"></i></a></li>
+                                <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="panel-search">
+                            <form>
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <i class="fa fa-search icon"></i>
+                            </form>
+                        </div>
+
+
+                        <div class="panel-body table-responsive">
+
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <td>Date</td>
+                                    <td>Title</td>
+                                    <td>Location</td>
+                                    <td>Sign in</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in issue_information[1] %}
+                                    <tr>
+                                        <td>{{ item[2] }}</td>
+                                        <td>{{ item[1] }}</td>
+                                        <td>{{ item[3] }}</td>
+                                    </tr>
+
+                                {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End 会议 -->
+
+
+            </div>
+
+
         </div>
+        <!-- END CONTAINER -->
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+    {% endblock %}
 
-        <div class="panel-search">
-          <form>
-            <input type="text" class="form-control" placeholder="Search...">
-            <i class="fa fa-search icon"></i>
-          </form>
+
+
+
+    <!-- Start Footer -->
+    <div class="row footer">
+        <div class="col-md-6 text-left">
+            Copyright © 2020 <a href="https://aucssnz.com/">AUCSS</a> All rights reserved. | V0.0.1
         </div>
-
-
-        <div class="panel-body table-responsive">
-
-          <table class="table table-hover table-striped">
-            <thead>
-              <tr>
-                <td>Date</td>
-                <td>Title</td>
-                <td>Location</td>
-                <td>Sign in</td>
-              </tr>
-            </thead>
-            <tbody>
-                   {% for item in issue_information[1]%}
-                       <tr>
-                       <td>{{ item[2] }}</td>
-                       <td>{{ item[1] }}</td>
-                       <td>{{ item[3] }}</td>
-                       </tr>
-
-                   {% endfor %}
-
-
-            </tbody>
-          </table>
-
+        <div class="col-md-6 text-right">
+            Developed by Zach Wang
         </div>
-      </div>
     </div>
-    <!-- End 会议 -->
-
-
-
-
-  </div>
-
-
-</div>
-<!-- END CONTAINER -->
- <!-- //////////////////////////////////////////////////////////////////////////// -->
-{% endblock %}
-
-
-
-
-<!-- Start Footer -->
-<div class="row footer">
-  <div class="col-md-6 text-left">
-  Copyright © 2020    <a href="https://aucssnz.com/">AUCSS</a>  All rights reserved.  |  V0.0.1
-  </div>
-  <div class="col-md-6 text-right">
-   Developed by Zach Wang
-  </div>
-</div>
-<!-- End Footer -->
+    <!-- End Footer -->
 
 
 </div>
 <!-- End Content -->
- <!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
 <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -279,93 +337,92 @@ Below codes are only for index widgets
 <!-- Today Sales -->
 <script>
 
-// set up our data series with 50 random data points
+    // set up our data series with 50 random data points
 
-var seriesData = [ [], [], [] ];
-var random = new Rickshaw.Fixtures.RandomData(20);
+    var seriesData = [[], [], []];
+    var random = new Rickshaw.Fixtures.RandomData(20);
 
-for (var i = 0; i < 110; i++) {
-  random.addData(seriesData);
-}
-
-// instantiate our graph!
-
-var graph = new Rickshaw.Graph( {
-  element: document.getElementById("todaysales"),
-  renderer: 'bar',
-  series: [
-    {
-      color: "#33577B",
-      data: seriesData[0],
-      name: 'Photodune'
-    }, {
-      color: "#77BBFF",
-      data: seriesData[1],
-      name: 'Themeforest'
-    }, {
-      color: "#C1E0FF",
-      data: seriesData[2],
-      name: 'Codecanyon'
+    for (var i = 0; i < 110; i++) {
+        random.addData(seriesData);
     }
-  ]
-} );
 
-graph.render();
+    // instantiate our graph!
 
-var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-  graph: graph,
-  formatter: function(series, x, y) {
-    var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
-    var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-    var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
-    return content;
-  }
-} );
+    var graph = new Rickshaw.Graph({
+        element: document.getElementById("todaysales"),
+        renderer: 'bar',
+        series: [
+            {
+                color: "#33577B",
+                data: seriesData[0],
+                name: 'Photodune'
+            }, {
+                color: "#77BBFF",
+                data: seriesData[1],
+                name: 'Themeforest'
+            }, {
+                color: "#C1E0FF",
+                data: seriesData[2],
+                name: 'Codecanyon'
+            }
+        ]
+    });
+
+    graph.render();
+
+    var hoverDetail = new Rickshaw.Graph.HoverDetail({
+        graph: graph,
+        formatter: function (series, x, y) {
+            var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
+            var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+            var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
+            return content;
+        }
+    });
 
 </script>
 
 <!-- Today Activity -->
 <script>
-// set up our data series with 50 random data points
+    // set up our data series with 50 random data points
 
-var seriesData = [ [], [], [] ];
-var random = new Rickshaw.Fixtures.RandomData(20);
+    var seriesData = [[], [], []];
+    var random = new Rickshaw.Fixtures.RandomData(20);
 
-for (var i = 0; i < 50; i++) {
-  random.addData(seriesData);
-}
-
-// instantiate our graph!
-
-var graph = new Rickshaw.Graph( {
-  element: document.getElementById("todayactivity"),
-  renderer: 'area',
-  series: [
-    {
-      color: "#9A80B9",
-      data: seriesData[0],
-      name: 'London'
-    }, {
-      color: "#CDC0DC",
-      data: seriesData[1],
-      name: 'Tokyo'
+    for (var i = 0; i < 50; i++) {
+        random.addData(seriesData);
     }
-  ]
-} );
 
-graph.render();
+    // instantiate our graph!
 
-var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-  graph: graph,
-  formatter: function(series, x, y) {
-    var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
-    var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-    var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
-    return content;
-  }
-} );
+    var graph = new Rickshaw.Graph({
+        element: document.getElementById("todayactivity"),
+        renderer: 'area',
+        series: [
+            {
+                color: "#9A80B9",
+                data: seriesData[0],
+                name: 'London'
+            }, {
+                color: "#CDC0DC",
+                data: seriesData[1],
+                name: 'Tokyo'
+            }
+        ]
+    });
+
+    graph.render();
+
+    var hoverDetail = new Rickshaw.Graph.HoverDetail({
+        graph: graph,
+        formatter: function (series, x, y) {
+            var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
+            var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+            var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
+            return content;
+        }
+    });
 </script>
-
 
 
 </body>

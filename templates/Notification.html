@@ -1,0 +1,95 @@
+{% extends 'HRadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color7-bg"><i class="fa fa-bullhorn"></i></span>
+            <h1>Notification</h1>
+            <h4>发送通知</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-padding">
+
+
+        <!-- Start Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        new notification
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="post">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label">Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="title">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label">Message</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" name="message"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">Send</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        Already sent
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td>Notice Title</td>
+                                <td>Processor</td>
+                            </tr>
+                            {% for item in all_notifi %}
+                                <tr>
+                                    <td>{{ item[1] }}</td>
+                                    <td>{{ item[4] }}</td>
+                                    {% if item[5]=='Y' %}
+                                        <td><a href="{{ url_for('recall_notice',id=item[0]) }}" class="btn btn-primary"><i class="fa fa-times"></i>Recall</a></td>
+                                    {% endif %}
+
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
+

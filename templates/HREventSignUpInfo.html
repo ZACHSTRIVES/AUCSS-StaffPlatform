@@ -1,0 +1,138 @@
+{% extends 'HRadmin.html' %}
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color5-bg"><i class="fa fa-info"></i></span>
+            <h1>Event SignUp</h1>
+            <h4>活动报名</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-widget">
+        <div class="row">
+            <div class="panel panel-transparent">
+
+                <div class="panel-title">
+                    Events
+                </div>
+
+                <div class="panel-body">
+
+                    <div role="tabpanel">
+                        <ul class="nav nav-pills" role="tablist">
+                            <!-- Nav tabs -->
+                            {% for event in events %}
+                                {% if event==events[0] %}
+                                    <li role="presentation" class="active"><a href="#event{{ event[0] }}"
+                                                                              aria-controls="event{{ event[0] }}"
+                                                                              role="tab"
+                                                                              data-toggle="tab">{{ event[1] }}</a></li>
+
+                                {% else %}
+                                    <li role="presentation"><a href="#event{{ event[0] }}"
+                                                               aria-controls="event{{ event[0] }}"
+                                                               role="tab"
+                                                               data-toggle="tab">{{ event[1] }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <!-- Tab panes -->
+
+                        <div class="tab-content">
+                            {% for event in events %}
+                                {% if event==events[0] %}
+                                    <div role="tabpanel" class="tab-pane active" id="event{{ event[0] }}">
+                                        <div class="panel-body table-responsive">
+                                            <p>Sign Up URL:<code href="http://aucss.co.nz/EventSignUpid{{ event[0] }}">http://aucss.co.nz/EventSignUpid{{ event[0] }}</code>
+                                            </p>
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Email</td>
+                                                    <td>Wechat ID</td>
+                                                    <td>Contact</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for e in all_member %}
+                                                    {% if e[0]==event[0] %}
+                                                        {% for m in e %}
+                                                            {% if m!=e[0] %}
+                                                                <tr>
+                                                                    <td>{{ m[1] }}</td>
+                                                                    <td>{{ m[2] }}</td>
+                                                                    <td>{{ m[3] }}</td>
+                                                                    <td>{{ m[4] }}</td>
+                                                                </tr>
+                                                            {% endif %}
+
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                {% else %}
+                                    <div role="tabpanel" class="tab-pane" id="event{{ event[0] }}">
+                                        <div class="panel-body table-responsive">
+                                            <p>Sign Up URL:<code href="http://aucss.co.nz/EventSignUpid{{ event[0] }}">http://aucss.co.nz/EventSignUpid{{ event[0] }}</code>
+                                            </p>
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Email</td>
+                                                    <td>Wechat ID</td>
+                                                    <td>Contact</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for e in all_member %}
+                                                    {% if e[0]==event[0] %}
+                                                        {% for m in e %}
+                                                            {% if m!=e[0] %}
+                                                                <tr>
+                                                                    <td>{{ m[1] }}</td>
+                                                                    <td>{{ m[2] }}</td>
+                                                                    <td>{{ m[3] }}</td>
+                                                                    <td>{{ m[4] }}</td>
+                                                                </tr>
+                                                            {% endif %}
+
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

@@ -5,6 +5,7 @@ from config import db
 from meeting import *
 from sponsor import *
 from event import *
+from notification import *
 import random
 import config
 from leave import *
@@ -12,6 +13,31 @@ from leave import *
 app = Flask(__name__)
 
 app.config.from_object(config)
+
+'''
+代码库说明：
+app.py ==> 网页框架以及所有route.
+config.py ==> 数据库配置.
+event.py ==> 所有活动有关的function.
+leave.py ==> 所有请假有关的function.
+meeting.py ==> 所有会议有关的function.
+sponsor.py ==> 所有商家数据库有关的function.
+signup.py ==> 所有活动报名有关的function.
+test.py ==> 测试使用.
+
++-----Templates：
+      储存所有html file
++-----static：
+      储存所有静态文件--> 图片, css, javascript脚本
+
+
+版本记录：
+V0.0.1 Init Web------------
+开发者：Zach Wang
+测试人员：Dougie Feng, Hanzheng Wang (China status), William Wu, Ariel Wu
+
+
+'''
 
 
 # App init====================================================================================================
@@ -141,15 +167,18 @@ def dashbord():
         return render_template('index.html')
     else:
         meetings = list_meeting_of_user(login_['email'])
+        notification = fetch_all_notification_from_db()
         data = [login_['name'], meetings, str(len(meetings))]  # data=[0=email,1=meetings,2=len(meetings)]
         if login_['type'] == 1:  # Category 1: General Staff
             return render_template('backend.html', user_name=data[0], issue_information=data)
         if login_['type'] == 2:  # Category 2: HR Staff
-            return hr(data)
+            return hr(data, notification)
         if login_['type'] == 3:  # Category 3: PR Staff
-            return pr(data)
+            return pr(data, notification)
         if login_['type'] == 4:  # Category 4: EP Staff
-            return ep(data)
+            return ep(data, notification)
+        if login_['type'] == 6:  # Category 4: OP Staff
+            return op(data, notification)
 
 
 @app.route('/logout')
@@ -198,6 +227,10 @@ def meeting_leave():
             all_event = fetch_all_event_id_from_database()
             return render_template('MeetingLeaveEP.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
                                    user_name=login_['name'], events=all_event)
+        elif login_['type'] == 6:
+            all_event = fetch_all_event_id_from_database()
+            return render_template('MeetingLeaveOP.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
+                                   user_name=login_['name'], events=all_event)
 
 
 @app.route('/meetingleave', methods=['POST'])
@@ -214,11 +247,11 @@ def apply_for_leave():
 
 # Page for department of HR ====================================================================================
 @app.route('/hr')
-def hr(issu):
+def hr(issu, notification):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
-    return render_template('HRadmin.html', user_name=issu[0], issue_information=issu)
+    return render_template('HRadmin.html', user_name=issu[0], issue_information=issu, notification=notification)
 
 
 @app.route('/meetings', methods=['GET'])
@@ -327,14 +360,54 @@ def approve_leave(mid, email):
     return redirect(url_for('manage_leave', ))
 
 
-# Page for department of PR ====================================================================================
+@app.route('/notification', methods=['GET', 'POST'])
+def notification():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect((url_for('dashbord')))
+    if request.method == 'GET':
+        all_notifi = fetch_all_notification_from_db()
+        return render_template('Notification.html', user_name=login_['name'], all_notifi=all_notifi)
+    elif request.method == 'POST':
+        title = request.form.get('title')
+        message = request.form.get('message')
+        sender = '人力资源部'
+        add_notification_to_db(title, message, sender, login_['name'])
+        return redirect(url_for('notification'))
+
+
+@app.route('/recallid<id>')
+def recall_notice(id):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect((url_for('dashbord')))
+    mark_not_show_to_db(id)
+    return redirect(url_for('notification'))
+
+
+@app.route('/HREventSignupInfo')
+def event_signup_info():
+    login_ = login_status()
+    if len(login_)==0:
+        return redirect(url_for('dashbord'))
+    else:
+        events = fetch_all_event_id_from_database()
+        all_member=classification_of_event(events)
+        return render_template('HREventSignUpInfo.html', user_name=login_['name'], events=events,all_member=all_member)
+
+
+'''
+ Page for department of PR ====================================================================================
+'''
+
+
 @app.route('/pr', methods=['GET'])
-def pr(issu):
+def pr(issu, notification):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
 
-    return render_template('PRadmin.html', user_name=login_['name'], issue_information=issu)
+    return render_template('PRadmin.html', user_name=login_['name'], issue_information=issu, notification=notification)
 
 
 @app.route('/sponsordatabase', methods=['GET', 'POST'])
@@ -356,7 +429,7 @@ def sponsor_database():
         sponsor_comment = request.form.get('sponsor_comment')
         sql = "INSERT INTO sponsors (sponsor_name,sponsor_add,contact_name,contact,contact_type,staff,sponsor_comment)" \
               "VALUES ('%s','%s','%s','%s','%s','%s','%s')" % (
-              sponsor_name, sponsor_add, contact_name, contact, contact_type, staff, sponsor_comment)
+                  sponsor_name, sponsor_add, contact_name, contact, contact_type, staff, sponsor_comment)
         add_sponsor(sql)
         return redirect(url_for('sponsor_database'))
 
@@ -397,35 +470,35 @@ def delete_sponsor(sid):
 
 # Page for department of EP ====================================================================================
 @app.route('/ep', methods=['GET'])
-def ep(issu):
+def ep(issu, notification):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     all_event = fetch_all_event_id_from_database()
 
-    return render_template('EPadmin.html', user_name=login_['name'], issue_information=issu, events=all_event)
+    return render_template('EPadmin.html', user_name=login_['name'], issue_information=issu, events=all_event,
+                           notification=notification)
 
 
-@app.route('/EventDashboard-id=<id>', methods=['GET','POST'])
+@app.route('/EventDashboard-id=<id>', methods=['GET', 'POST'])
 def event_dashboard(id):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
-    if request.method=='GET':
+    if request.method == 'GET':
         all_event = fetch_all_event_id_from_database()
         event = get_event(id)
         member = get_all_member_sign_for_the_event(id)
 
         return render_template('EventDashboard.html', user_name=login_['name'], events=all_event, event=event,
                                count=len(member))
-    elif request.method=='POST':
-        title=request.form.get('title')
-        target=request.form.get('targetMember')
-        date=request.form.get('date')
-        time=request.form.get('time')
-        update_event(id,title,target,time,date)
-        return redirect(url_for('event_dashboard',id=id))
-
+    elif request.method == 'POST':
+        title = request.form.get('title')
+        target = request.form.get('targetMember')
+        date = request.form.get('date')
+        time = request.form.get('time')
+        update_event(id, title, target, time, date)
+        return redirect(url_for('event_dashboard', id=id))
 
 
 @app.route('/SignUpManage=id=<id>', methods=['GET'])
@@ -439,7 +512,8 @@ def sign_up_manage(id):
         return render_template('EventSignUpManageEP.html', user_name=login_['name'], events=all_event, event=event)
     elif event[4] == 'STARTED':
         member = get_all_member_sign_for_the_event(id)
-        return render_template('EventSignUpManageStatsEP.html', user_name=login_['name'], events=all_event, event=event,member=member,count=len(member))
+        return render_template('EventSignUpManageStatsEP.html', user_name=login_['name'], events=all_event, event=event,
+                               member=member, count=len(member))
 
 
 @app.route('/SingUpManage/startid<id>')
@@ -448,7 +522,8 @@ def start_sign_up(id):
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     sign_up_start(id)
-    return redirect(url_for('sign_up_manage',id=id))
+    return redirect(url_for('sign_up_manage', id=id))
+
 
 @app.route('/SingUpManage/endid<id>')
 def end_sign_up(id):
@@ -456,7 +531,7 @@ def end_sign_up(id):
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     sign_up_end(id)
-    return redirect(url_for('sign_up_manage',id=id))
+    return redirect(url_for('sign_up_manage', id=id))
 
 
 @app.route('/EventSignUpid<id>', methods=['GET', 'POST'])
@@ -473,36 +548,38 @@ def sign_up(id):
         email = request.form.get('email')
         wechat = request.form.get('wx')
         contact = request.form.get('contact')
-        sign_up_to_database(id,name,email,wechat,contact)
-        return render_template('EventSignUpFinished.html',name=name)
+        sign_up_to_database(id, name, email, wechat, contact)
+        return render_template('EventSignUpFinished.html', name=name)
 
 
-@app.route('/EventNeedsId<id>',methods=['GET','POST'])
+@app.route('/EventNeedsId<id>', methods=['GET', 'POST'])
 def event_needs(id):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     event = get_event(id)
     all_event = fetch_all_event_id_from_database()
-    if request.method=='GET':
-        all_items=get_unsent_items(id)
-        sent_items=get_sent_items(id)
-        return render_template('EventNeedList.html',events=all_event,event=event,items=all_items,sent_items=sent_items)
-    if request.method=='POST':
-        item=request.form.get('item')
-        qty=request.form.get('qty')
-        comment=request.form.get('comment')
-        add_need_item(id,item,qty,comment)
-        return redirect(url_for('event_needs',id=id))
+    if request.method == 'GET':
+        all_items = get_unsent_items(id)
+        sent_items = get_sent_items(id)
+        return render_template('EventNeedList.html', events=all_event, event=event, items=all_items,
+                               sent_items=sent_items)
+    if request.method == 'POST':
+        item = request.form.get('item')
+        qty = request.form.get('qty')
+        comment = request.form.get('comment')
+        add_need_item(id, item, qty, comment)
+        return redirect(url_for('event_needs', id=id))
 
 
 @app.route('/DelectNeedsItem<eventid><id>')
-def del_item(eventid,id):
+def del_item(eventid, id):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     remove_item_from_db(id)
-    return redirect(url_for('event_needs',id=eventid))
+    return redirect(url_for('event_needs', id=eventid))
+
 
 @app.route('/sentitemid<id>')
 def sent_item(id):
@@ -510,10 +587,61 @@ def sent_item(id):
     if len(login_) == 0:
         return redirect(url_for(('dashbord')))
     change_sent_status(id)
-    return redirect(url_for('event_needs',id=id))
+    return redirect(url_for('event_needs', id=id))
 
 
+# Page for department of OP 运营支持部====================================================================================
+@app.route('/op', methods=['GET'])
+def op(issu, notification):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    all_event = fetch_all_event_id_from_database()
+
+    return render_template('OPadmin.html', user_name=login_['name'], issue_information=issu, events=all_event,
+                           notification=notification)
+
+
+@app.route('/eventNeedslistid<id>')
+def event_needs_op_page(id):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    all_event = fetch_all_event_id_from_database()
+    event = get_event(id)
+    need = get_sent_items_not_buy(id)
+    bought = get_sent_items_have_bought(id)
+    return render_template('OPEventNeedsList.html', user_name=login_['name'], events=all_event, event=event, need=need,
+                           bought=bought)
+
+
+@app.route('/boughtitem<id><eid>')
+def complete_buy(id, eid):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    finish_buy_item(id, login_['name'])
+    return redirect(url_for('event_needs_op_page', id=eid))
 
 
 if __name__ == '__main__':
     app.run()
+
+
+@app.route('/bugfeedback', methods=['GET', 'POST'])
+def bug_feedback():
+    if request.method == 'GET':
+        return render_template('BugFeedback.html')
+    elif request.method == 'POST':
+        name = request.form.get('name')
+        feedback = request.form.get('feedback')
+        try:
+            cur = db.cursor()
+            sql = "INSERT INTO feedback(name,feedback) VALUES ('%s','%s')" % (name, feedback)
+            db.ping(reconnect=True)
+            cur.execute(sql)
+            db.commit()
+            cur.close()
+            return redirect(url_for('dashbord'))
+        except Exception as e:
+            print(e)

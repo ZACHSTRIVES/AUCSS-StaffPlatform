@@ -1,0 +1,100 @@
+{% extends 'OPadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color14-bg"><i class="fa fa-cc-visa"></i></span>
+            <h1>{{ event[1] }}</h1>
+            <h4>采购清单</h4>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-padding">
+        <div class="row">
+            <!-- Start Panel -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-title">
+                        Need to Purchase
+                    </div>
+
+                    <div class="panel-body table-responsive">
+                        <p>Please click <code> √ </code> when the purchase is completed.
+                        </p>
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td>Item</td>
+                                <td>QTY.</td>
+                                <td>comment</td>
+                                <td>purchase</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in need %}
+                                <tr>
+                                    <td><b>{{ i[1] }}</b></td>
+                                    <td>{{ i[2] }}</td>
+                                    <td>{{ i[3] }}</td>
+                                    <td><a href="{{ url_for('complete_buy',id=i[0],eid=event[0]) }}"><i class="fa fa-check"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Panel -->
+        </div>
+        <div class="row">
+            <!-- Start Panel -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-title">
+                        have purchased
+                    </div>
+
+                    <div class="panel-body table-responsive">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <td>Item</td>
+                                <td>QTY.</td>
+                                <td>comment</td>
+                                <td>staff</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in bought %}
+                                <tr>
+                                    <td><b>{{ i[1] }}</b></td>
+                                    <td>{{ i[2] }}</td>
+                                    <td>{{ i[3] }}</td>
+                                    <td>{{ i[7] }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Panel -->
+        </div>
+    </div>
+
+
+
+{% endblock %}
