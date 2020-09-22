@@ -177,6 +177,8 @@ def dashbord():
             return pr(data, notification)
         if login_['type'] == 4:  # Category 4: EP Staff
             return ep(data, notification)
+        if login_['type'] == 5:  # Category 4: EP Staff
+            return mkt(data, notification)
         if login_['type'] == 6:  # Category 4: OP Staff
             return op(data, notification)
 
@@ -623,11 +625,35 @@ def complete_buy(id, eid):
     finish_buy_item(id, login_['name'])
     return redirect(url_for('event_needs_op_page', id=eid))
 
+'''
+ Page for department of MKT 市场部===================================================================================================================
+'''
+@app.route('/mkt',methods=['GET'])
+def mkt(issu,notification):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for('dashbord'))
+    all_event = fetch_all_event_id_from_database()
+
+    return render_template('MKTadmin.html', user_name=login_['name'], issue_information=issu,
+                           notification=notification)
+@app.route('/WechatArticle',methods=['GET'])
+def article():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for('dashbord'))
+    return render_template('MKTArticle.html',user_name=login_['name'])
+
+
+
+
 
 if __name__ == '__main__':
     app.run()
 
-
+'''
+BUG反馈===================================================================================================================
+'''
 @app.route('/bugfeedback', methods=['GET', 'POST'])
 def bug_feedback():
     if request.method == 'GET':

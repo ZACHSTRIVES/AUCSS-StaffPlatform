@@ -1,0 +1,31 @@
+{% extends 'backend.html' %}
+
+
+{% block loading %}
+{% endblock %}
+
+{% block siderbar %}
+
+    <div class="sidebar clearfix">
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">FEATURE</li>
+            <li><a href="{{ url_for('dashbord') }}"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard</a>
+            </li>
+            <li><a href="{{ url_for('meeting_leave') }}"><span class="icon color5"><i class="fa fa-group"></i></span>Meeting
+                Leave | 请假</a>
+            </li>
+
+
+        </ul>
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">市场部</li>
+            <li><a href="{{ url_for('article') }}"><span class="icon color15"><i class="fa fa-weixin"></i></span>Wechat Article | 公众号推文</a>
+            </li>
+
+        </ul>
+
+    </div>
+{% endblock %}
+
