@@ -6,6 +6,7 @@ from meeting import *
 from sponsor import *
 from event import *
 from notification import *
+from time_covert import *
 import random
 import config
 from leave import *
@@ -34,6 +35,7 @@ test.py ==> 测试使用.
 版本记录：
 V0.0.1 Init Web------------
 开发者：Zach Wang
+产品经理：Dougie Feng
 测试人员：Dougie Feng, Hanzheng Wang (China status), William Wu, Ariel Wu
 
 
@@ -166,7 +168,7 @@ def dashbord():
     if len(login_) == 0:
         return render_template('index.html')
     else:
-        meetings = list_meeting_of_user(login_['email'])
+        meetings = list_all_meetings()
         notification = fetch_all_notification_from_db()
         data = [login_['name'], meetings, str(len(meetings))]  # data=[0=email,1=meetings,2=len(meetings)]
         if login_['type'] == 1:  # Category 1: General Staff
@@ -274,18 +276,12 @@ def add_meeting():
         return redirect(url_for(('dashbord')))
     location = request.form.get('location')
     title = request.form.get('title')
-    date = request.form.get('date').split("-")
     time = request.form.get('time')
-    id = int(str(date[2] + date[1] + date[0]) + str(random.randrange(100, 999)))
-    meeting_ids = get_all_meeting_id()
-    while id in meeting_ids:
-        id = int(date.replace('-', '') + str(random.randrange(100, 999)))
-    datatime = date[2] + "-" + date[1] + "-" + date[0] + " " + time + ":00"
-    sql = "INSERT INTO meeting(meeting_id,meeting_title,meeting_location,meeting_date) " \
-          "VALUES (%s,'%s','%s','%s')" % (id, title, location, datatime)
+    datatime = html_format_TO_mysql_format(time)
+    sql = "INSERT INTO meeting(meeting_title,meeting_location,meeting_date) " \
+          "VALUES ('%s','%s','%s')" % (title, location, datatime)
 
     edit_meeting_to_database(sql)
-    add_all_staff_to_meeting(id)
     return redirect(url_for(('manag_meeting')))
 
 
@@ -304,21 +300,20 @@ def edit_meeting(mid):
             title = meeting[0][1]
             location = meeting[0][2]
             datetime = meeting[0][3]
-            date = datetime.strftime("%x")
-            time = datetime.strftime("%X")[:-3]
+            datetime =datetime_format_TO_html_format(datetime)
+            print(date)
             return render_template('EditMeeting.html', user_name=login_['name'], mid=mid, title=title,
-                                   location=location, date=date, time=time)
+                                   location=location, time=datetime)
         except Exception as e:
             raise e
     elif request.method == 'POST':
         try:
             location = request.form.get('location')
             title = request.form.get('title')
-            date = request.form.get('date').split("/")
             time = request.form.get('time')
-            datatime = "20" + date[2] + "-" + date[1] + "-" + date[0] + " " + time + "00"
+            datetime =html_format_TO_mysql_format(time)
             sql = "update meeting set meeting_title='%s',meeting_location='%s',meeting_date='%s' where meeting_id=%s" % (
-                title, location, datatime, mid)
+                title, location, datetime, mid)
             edit_meeting_to_database(sql)
             return manag_meeting()
         except Exception as e:
@@ -644,8 +639,12 @@ def article():
         return redirect(url_for('dashbord'))
     return render_template('MKTArticle.html',user_name=login_['name'])
 
-
-
+@app.route('/AddAriticle',methods=['GET','POST'])
+def add_article():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for('dashbord'))
+    return render_template('MKTAddNewArticle.html', user_name=login_['name'])
 
 
 if __name__ == '__main__':
@@ -663,7 +662,7 @@ def bug_feedback():
         feedback = request.form.get('feedback')
         try:
             cur = db.cursor()
-            sql = "INSERT INTO feedback(name,feedback) VALUES ('%s','%s')" % (name, feedback)
+            sql = "INSERT INTO feedback(name,feedback) VALUES ('%s','%s')" % (name, pymysql.escape_string(feedback))
             db.ping(reconnect=True)
             cur.execute(sql)
             db.commit()

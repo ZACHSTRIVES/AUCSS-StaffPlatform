@@ -200,7 +200,7 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
-                                    <td>Date</td>
+                                    <td>Time</td>
                                     <td>Title</td>
                                     <td>Location</td>
                                     <td>Sign in</td>
@@ -209,9 +209,9 @@
                                 <tbody>
                                 {% for item in issue_information[1] %}
                                     <tr>
-                                        <td>{{ item[2] }}</td>
-                                        <td>{{ item[1] }}</td>
                                         <td>{{ item[3] }}</td>
+                                        <td>{{ item[1] }}</td>
+                                        <td>{{ item[2] }}</td>
                                     </tr>
 
                                 {% endfor %}

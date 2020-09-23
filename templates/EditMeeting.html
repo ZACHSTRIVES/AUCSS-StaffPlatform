@@ -19,26 +19,18 @@
                             <fieldset>
                                 <div class="form-group">
                                     <label for="example10" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="example10" value="{{ title }}" name="title">
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <div class="input-prepend input-group">
-                                                            <span class="add-on input-group-addon"><i
-                                                                    class="fa fa-calendar"></i></span>
-                                            <input type="text" id="date-picker" class="form-control"
-                                                   value="{{ date }}" name="date"/>
-                                        </div>
-                                    </div>
+                                    <input type="text" class="form-control" id="example10" value="{{ title }}"
+                                           name="title">
                                 </div>
                                 <div class="form-group">
-                                    <label for="example10" class="form-label">Time</label>
-                                    <input type="text" class="form-control" id="example10" style="width: 100px"
-                                           value="{{ time }}" name="time">
+                                    <label for="input2" class="form-label">Time</label>
+                                    <input type="datetime-local" class="form-control" id="input2" name="time" value="{{ time }}">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="example10" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="example10" value="{{ location }}" name="location">
+                                    <input type="text" class="form-control" id="example10" value="{{ location }}"
+                                           name="location">
                                 </div>
                                 <button type="submit" class="btn btn-default">Submit</button>
                                 <a href="{{ url_for('del_meeting',mid=mid) }}" class="btn btn-danger">Delete</a>

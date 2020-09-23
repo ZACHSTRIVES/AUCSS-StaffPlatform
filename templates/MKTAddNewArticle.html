@@ -1,0 +1,108 @@
+{% extends 'MKTadmin.html' %}
+
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color7-bg"><i class="fa fa-wechat"></i></span>
+            <h1>Wechat Article</h1>
+            <h4>推送任务分配系统</h4>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="panel panel-default">
+
+                    <div class="panel-title">
+                        ADD ARTICLE
+                        <ul class="panel-tools">
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="input1" class="form-label">推送标题</label>
+                                <input type="text" class="form-control" id="input1" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="input2" class="form-label">计划发送时间</label>
+                                <input type="datetime-local" class="form-control" id="input2" name="due_date">
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label for="input3" class="form-label">海报/Banner 截稿时间</label>
+                                <input type="datetime-local" class="form-control" id="input3" value="" name="banner_duedate">
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-4 control-label form-label">海报/Banner 负责人</label>
+                                <div class="col-sm-8">
+                                    <select class="selectpicker" multiple name="banner_staff">
+                                        <option>GT</option>
+                                        <option>Sunny</option>
+                                        <option>..</option>
+                                        <option>....</option>
+                                        <option>.....</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="form-group">
+                                <label for="input3" class="form-label">文案 截稿时间</label>
+                                <input type="datetime-local" class="form-control" id="input3" value="" name="text_duedate">
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-4 control-label form-label">文案 负责人</label>
+                                <div class="col-sm-8">
+                                    <select class="selectpicker" multiple name="text_staff">
+                                        <option>GT</option>
+                                        <option>Sunny</option>
+                                        <option>..</option>
+                                        <option>....</option>
+                                        <option>.....</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="form-group">
+                                <label for="input3" class="form-label">排版 截稿时间</label>
+                                <input type="datetime-local" class="form-control" id="input3" value="" name="style_duedate">
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-4 control-label form-label">排版 负责人</label>
+                                <div class="col-sm-8">
+                                    <select class="selectpicker" multiple name="style_staff">
+                                        <option>GT</option>
+                                        <option>Sunny</option>
+                                        <option>..</option>
+                                        <option>....</option>
+                                        <option>.....</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <br>
+
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<script type="text/javascript" src="static/js/bootstrap-select/bootstrap-select.js"></script>
+<script type="text/javascript" src="static/js/daterangepicker.js"></script>

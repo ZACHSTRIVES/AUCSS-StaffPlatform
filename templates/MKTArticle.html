@@ -11,9 +11,32 @@
             <h4>推送任务分配系统</h4>
         </div>
 
-
     </div>
 {% endblock %}
 
 {% block container %}
+    <div class="container-padding">
+        <div class="row">
+            <!-- Start Panel -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        operations
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a href="{{ url_for('add_article') }}" type="button" class="btn btn-light"><i class="fa fa-plus"></i>新建推送</a>
+                            <button type="button" class="btn btn-light">Middle</button>
+                            <button type="button" class="btn btn-light">Right</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Panel -->
+        </div>
+
+    </div>
 {% endblock %}

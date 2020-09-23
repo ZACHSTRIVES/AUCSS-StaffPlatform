@@ -1059,8 +1059,9 @@ SELECT|sys.sys_config:null
     </column>
     <column id="327" parent="292" name="meeting_id">
       <Position>1</Position>
-      <DataType>double|0s</DataType>
+      <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="328" parent="292" name="meeting_title">
       <Position>2</Position>
@@ -1073,137 +1074,141 @@ SELECT|sys.sys_config:null
     <column id="330" parent="292" name="meeting_date">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
-      <DefaultExpression>&apos;2020-12-12 18:00:00&apos;</DefaultExpression>
     </column>
-    <column id="331" parent="293" name="meeting_id">
+    <key id="331" parent="292" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>meeting_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="332" parent="293" name="meeting_id">
       <Position>1</Position>
       <DataType>double|0s</DataType>
     </column>
-    <column id="332" parent="293" name="user_email">
+    <column id="333" parent="293" name="user_email">
       <Position>2</Position>
       <DataType>char(100)|0s</DataType>
     </column>
-    <column id="333" parent="293" name="reason">
+    <column id="334" parent="293" name="reason">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="334" parent="293" name="status">
+    <column id="335" parent="293" name="status">
       <Position>4</Position>
       <DataType>char(30)|0s</DataType>
     </column>
-    <column id="335" parent="294" name="user_email">
+    <column id="336" parent="294" name="user_email">
       <Position>1</Position>
       <DataType>char(100)|0s</DataType>
     </column>
-    <column id="336" parent="294" name="meeting_id">
+    <column id="337" parent="294" name="meeting_id">
       <Position>2</Position>
       <DataType>double|0s</DataType>
     </column>
-    <column id="337" parent="295" name="notification_id">
+    <column id="338" parent="295" name="notification_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="338" parent="295" name="notification_title">
+    <column id="339" parent="295" name="notification_title">
       <Position>2</Position>
       <DataType>char(50)|0s</DataType>
     </column>
-    <column id="339" parent="295" name="message">
+    <column id="340" parent="295" name="message">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="340" parent="295" name="sender">
+    <column id="341" parent="295" name="sender">
       <Position>4</Position>
       <DataType>char(30)|0s</DataType>
     </column>
-    <column id="341" parent="295" name="staff">
+    <column id="342" parent="295" name="staff">
       <Position>5</Position>
       <DataType>char(30)|0s</DataType>
     </column>
-    <column id="342" parent="295" name="is_show">
+    <column id="343" parent="295" name="is_show">
       <Position>6</Position>
       <DataType>char(1)|0s</DataType>
       <DefaultExpression>&apos;Y&apos;</DefaultExpression>
     </column>
-    <key id="343" parent="295" name="PRIMARY">
+    <key id="344" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>notification_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="344" parent="296" name="sponsor_id">
+    <column id="345" parent="296" name="sponsor_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="345" parent="296" name="sponsor_name">
+    <column id="346" parent="296" name="sponsor_name">
       <Position>2</Position>
       <DataType>char(100)|0s</DataType>
     </column>
-    <column id="346" parent="296" name="sponsor_add">
+    <column id="347" parent="296" name="sponsor_add">
       <Position>3</Position>
       <DataType>char(100)|0s</DataType>
     </column>
-    <column id="347" parent="296" name="contact_name">
+    <column id="348" parent="296" name="contact_name">
       <Position>4</Position>
       <DataType>char(30)|0s</DataType>
     </column>
-    <column id="348" parent="296" name="contact">
+    <column id="349" parent="296" name="contact">
       <Position>5</Position>
       <DataType>char(50)|0s</DataType>
       <DefaultExpression>&apos;&lt;none&gt;&apos;</DefaultExpression>
     </column>
-    <column id="349" parent="296" name="contact_type">
+    <column id="350" parent="296" name="contact_type">
       <Position>6</Position>
       <DataType>char(30)|0s</DataType>
       <DefaultExpression>&apos;&lt;none&gt;&apos;</DefaultExpression>
     </column>
-    <column id="350" parent="296" name="staff">
+    <column id="351" parent="296" name="staff">
       <Position>7</Position>
       <DataType>char(30)|0s</DataType>
       <DefaultExpression>&apos;&lt;none&gt;&apos;</DefaultExpression>
     </column>
-    <column id="351" parent="296" name="sponsor_comment">
+    <column id="352" parent="296" name="sponsor_comment">
       <Position>8</Position>
       <DataType>char(150)|0s</DataType>
     </column>
-    <key id="352" parent="296" name="PRIMARY">
+    <key id="353" parent="296" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sponsor_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="353" parent="297" name="Name">
+    <column id="354" parent="297" name="Name">
       <Position>1</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="354" parent="297" name="email">
+    <column id="355" parent="297" name="email">
       <Position>2</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="355" parent="297" name="password">
+    <column id="356" parent="297" name="password">
       <Position>3</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="356" parent="297" name="department">
+    <column id="357" parent="297" name="department">
       <Position>4</Position>
       <DataType>char(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="357" parent="297" name="type">
+    <column id="358" parent="297" name="type">
       <Position>5</Position>
       <DataType>int|0s</DataType>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <index id="358" parent="297" name="user_email_uindex">
+    <index id="359" parent="297" name="user_email_uindex">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="359" parent="297" name="user_email_uindex">
+    <key id="360" parent="297" name="user_email_uindex">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>user_email_uindex</UnderlyingIndexName>
     </key>
