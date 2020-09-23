@@ -1,3 +1,5 @@
+import pymysql
+
 from config import db
 
 
@@ -5,8 +7,9 @@ def apply_leave(email, mid, reason):
     try:
         status = "Processing"
         cur = db.cursor()
-        sql = "INSERT INTO meeting_leave (meeting_id,user_email,reason,status)VALUES (%s,'%s','%s','%s')" % (
-            mid, email, reason, status)
+        sql = "INSERT INTO meeting_leave (meeting_id,user_email,reason,status)VALUES (%s,\"%s\",\"%s\",\"%s\")" % (
+
+            mid, email, pymysql.escape_string(reason), status)
 
         db.ping(reconnect=True)
         cur.execute(sql)
