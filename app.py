@@ -7,6 +7,7 @@ from sponsor import *
 from event import *
 from notification import *
 from time_covert import *
+from article import *
 import random
 import config
 from leave import *
@@ -214,7 +215,7 @@ def meeting_leave():
     if request.method == 'GET':
         info = ''
         info1 = ''
-        meetings = list_meeting_of_user(login_['email'])
+        meetings = list_all_meetings()
         if len(meetings) == 0:
             info = "You don't have meetings at the moment where you can ask for leave."
         all_leaves = list_leave_apply_of_user(login_['email'])
@@ -637,14 +638,33 @@ def article():
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for('dashbord'))
-    return render_template('MKTArticle.html',user_name=login_['name'])
+    articles=fetch_all_article()
+    return render_template('MKTArticle.html',user_name=login_['name'],articles=articles)
 
 @app.route('/AddAriticle',methods=['GET','POST'])
 def add_article():
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for('dashbord'))
-    return render_template('MKTAddNewArticle.html', user_name=login_['name'])
+    if request.method=='GET':
+        mkt_staffs=fetch_all_mkt_staff()
+        return render_template('MKTAddNewArticle.html', user_name=login_['name'],staffs=mkt_staffs)
+    elif request.method=='POST':
+        title=request.form.get('title')
+        due_date=html_format_TO_mysql_format(request.form.get('due_date'))
+        banner_duedate=html_format_TO_mysql_format(request.form.get('banner_duedate'))
+        banner_staff=request.form.get('banner_staff')
+        text_duedate=html_format_TO_mysql_format(request.form.get('text_duedate'))
+        text_staff=request.form.get('text_staff')
+        style_duedate=html_format_TO_mysql_format(request.form.get('style_duedate'))
+        style_staff=request.form.get('style_staff')
+
+        add_article_to_db(title,due_date)
+        id=get_article_id(title)[0]
+        add_works_to_db(id,1,banner_staff,banner_duedate)
+        add_works_to_db(id,2,text_staff,text_duedate)
+        add_works_to_db(id,3,style_staff,style_duedate)
+        return redirect(url_for('article'))
 
 
 if __name__ == '__main__':

@@ -18,25 +18,125 @@
     <div class="container-padding">
         <div class="row">
             <!-- Start Panel -->
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-title">
-                        operations
-                    </div>
 
-                    <div class="panel-body">
-                        <div class="btn-group" role="group" aria-label="...">
-                            <a href="{{ url_for('add_article') }}" type="button" class="btn btn-light"><i class="fa fa-plus"></i>新建推送</a>
-                            <button type="button" class="btn btn-light">Middle</button>
-                            <button type="button" class="btn btn-light">Right</button>
+            <a href="{{ url_for('add_article') }}" type="button" class="btn btn-light"><i
+                    class="fa fa-plus"></i>新建推送</a>
+
+            <!-- End Panel -->
+        </div>
+        <div class="row">
+            <div class="panel panel-transparent">
+
+                <div class="panel-body">
+
+                    <div role="tabpanel">
+                        <ul class="nav nav-pills" role="tablist">
+                            <!-- Nav tabs -->
+                            {% for a in articles %}
+                                {% if a==articles[0] %}
+                                    <li role="presentation" class="active"><a href="#a{{ a[0] }}"
+                                                                              aria-controls="a{{ a[0] }}"
+                                                                              role="tab"
+                                                                              data-toggle="tab">{{ a[1] }}</a></li>
+
+                                {% else %}
+                                    <li role="presentation"><a href="#a{{ a[0] }}"
+                                                               aria-controls="a{{ a[0] }}"
+                                                               role="tab"
+                                                               data-toggle="tab">{{ a[1] }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <!-- Tab panes -->
+
+                        <div class="tab-content">
+                            {% for a in articles %}
+                                {% if a==articles[0] %}
+                                    <div role="tabpanel" class="tab-pane active" id="a{{ a[0] }}">
+                                {% else %}
+                                    <div role="tabpanel" class="tab-pane" id="a{{ a[0] }}">
+                                {% endif %}
+                            <div class="panel panel-default">
+
+                                <div class="panel-title">
+                                    Article Dashboard
+                                    <ul class="panel-tools">
+                                        <li><a href="#">Edit</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="panel-body">
+                                    <p><b>Progress</b></p>
+                                    <div class="progress">
+                                        {% if a[3]=='Y' %}
+                                            <div class="progress-bar progress-bar-danger" role="progressbar"
+                                                 aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: 30%;">
+                                                海报/BANNER
+                                            </div>
+                                        {% endif %}
+                                        {% if a[4]=='Y' %}
+                                            <div class="progress-bar progress-bar-info" role="progressbar"
+                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: 40%;">
+                                                文案
+                                            </div>
+                                        {% endif %}
+                                        {% if a[5]=='Y' %}
+                                            <div class="progress-bar progress-bar-warning" role="progressbar"
+                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: 30%;">
+                                                排版
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <p><b>计划发布时间：</b> {{ a[2] }}</p>
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <td>TASK</td>
+                                            <td>STAFF</td>
+                                            <td>DUE</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><b>海报/Banner</b></td>
+                                            <td>Kode Gaming Laptop</td>
+                                            <td>John Doe</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>文案</b></td>
+                                            <td>New Season Jacket</td>
+                                            <td>Jane Doe</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>排版</b></td>
+                                            <td>IO Mouse</td>
+                                            <td>Jonathan Doe</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+
+                            </div>
+
+                            {% endfor %}
+
+                            </div>
+
                         </div>
 
                     </div>
 
                 </div>
-            </div>
-            <!-- End Panel -->
-        </div>
 
-    </div>
+            </div>
+
+        </div>
 {% endblock %}

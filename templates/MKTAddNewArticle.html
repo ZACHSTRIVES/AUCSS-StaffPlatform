@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <form>
+                        <form method="post">
                             <div class="form-group">
                                 <label for="input1" class="form-label">推送标题</label>
                                 <input type="text" class="form-control" id="input1" name="title">
@@ -40,17 +40,16 @@
                             <hr>
                             <div class="form-group">
                                 <label for="input3" class="form-label">海报/Banner 截稿时间</label>
-                                <input type="datetime-local" class="form-control" id="input3" value="" name="banner_duedate">
+                                <input type="datetime-local" class="form-control" id="input3" value=""
+                                       name="banner_duedate">
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-sm-4 control-label form-label">海报/Banner 负责人</label>
                                 <div class="col-sm-8">
-                                    <select class="selectpicker" multiple name="banner_staff">
-                                        <option>GT</option>
-                                        <option>Sunny</option>
-                                        <option>..</option>
-                                        <option>....</option>
-                                        <option>.....</option>
+                                    <select class="selectpicker"  name="banner_staff">
+                                        {% for s in staffs %}
+                                            <option value="{{ s[1] }}">{{ s[0] }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -58,17 +57,16 @@
                             <hr>
                             <div class="form-group">
                                 <label for="input3" class="form-label">文案 截稿时间</label>
-                                <input type="datetime-local" class="form-control" id="input3" value="" name="text_duedate">
+                                <input type="datetime-local" class="form-control" id="input3" value=""
+                                       name="text_duedate">
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-sm-4 control-label form-label">文案 负责人</label>
                                 <div class="col-sm-8">
-                                    <select class="selectpicker" multiple name="text_staff">
-                                        <option>GT</option>
-                                        <option>Sunny</option>
-                                        <option>..</option>
-                                        <option>....</option>
-                                        <option>.....</option>
+                                    <select class="selectpicker"  name="text_staff">
+                                         {% for s in staffs %}
+                                            <option value="{{ s[1] }}">{{ s[0] }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -76,17 +74,16 @@
                             <hr>
                             <div class="form-group">
                                 <label for="input3" class="form-label">排版 截稿时间</label>
-                                <input type="datetime-local" class="form-control" id="input3" value="" name="style_duedate">
+                                <input type="datetime-local" class="form-control" id="input3" value=""
+                                       name="style_duedate">
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-sm-4 control-label form-label">排版 负责人</label>
                                 <div class="col-sm-8">
-                                    <select class="selectpicker" multiple name="style_staff">
-                                        <option>GT</option>
-                                        <option>Sunny</option>
-                                        <option>..</option>
-                                        <option>....</option>
-                                        <option>.....</option>
+                                    <select class="selectpicker"  name="style_staff">
+                                        {% for s in staffs %}
+                                            <option value="{{ s[1] }}">{{ s[0] }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
