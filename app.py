@@ -639,7 +639,21 @@ def article():
     if len(login_) == 0:
         return redirect(url_for('dashbord'))
     articles=fetch_all_article()
-    return render_template('MKTArticle.html',user_name=login_['name'],articles=articles)
+    works=get_works_list(articles)
+    tasks=get_task_list(login_['email'],articles)
+    return render_template('MKTArticle.html',user_name=login_['name'],articles=articles,works=works,tasks=tasks)
+
+@app.route('/finishtask<taskid><articleid><type>')
+def finish_aticle_task(taskid,articleid,type):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for('dashbord'))
+    finish_task_in_db(taskid,articleid,type)
+    print(taskid,articleid,type)
+    return redirect(url_for('article'))
+
+
+
 
 @app.route('/AddAriticle',methods=['GET','POST'])
 def add_article():
