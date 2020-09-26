@@ -20,6 +20,17 @@
 <body>
 
 <div class="login-form">
+    {% if get_flashed_messages()!=[] %}
+        <div class="panel panel-danger">
+
+            <div class="panel-title" style="text-align: center">
+                {{ get_flashed_messages()[-1] }}
+                <ul class="panel-tools">
+                    <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
     <form action="#" method="POST">
         <div class="top">
             <h1>Register</h1>

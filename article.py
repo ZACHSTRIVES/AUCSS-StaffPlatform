@@ -134,14 +134,14 @@ def get_task_list(email, articles):
 
 def update_finish_status(type, id):
     try:
-        type=int(type)
+        type = int(type)
         cur = db.cursor()
         sql = ''
         if type == 1:
             sql = "UPDATE article SET banner_status='Y' WHERE article_id=%s" % id
         elif type == 2:
             sql = "UPDATE article SET text_status='Y' WHERE article_id=%s" % id
-        elif type==3:
+        elif type == 3:
             sql = "UPDATE article SET style_status='Y' WHERE article_id=%s" % id
 
         db.ping(reconnect=True)
@@ -167,3 +167,30 @@ def update_task_status(id):
 def finish_task_in_db(task, article, type):
     update_task_status(task)
     update_finish_status(type, article)
+
+
+def count_person_performance(type, email):
+    try:
+        cur = db.cursor()
+        sql = "SELECT * FROM article_works WHERE works_staff='%s' AND works_type=%s AND is_finished='Y'" % (email, type)
+        db.ping(reconnect=True)
+        cur.execute(sql)
+        res = cur.fetchall()
+        db.commit()
+        cur.close()
+        return res
+    except Exception as e:
+        print(e)
+
+
+def count_performance():
+    all_staff = fetch_all_mkt_staff()
+    performance_list = []
+    for s in all_staff:
+        email = s[1]
+        banner = count_person_performance(1, email)
+        text = count_person_performance(2, email)
+        style = count_person_performance(3, email)
+        p_list = [s[0], len(banner), len(text), len(style)]
+        performance_list.append(p_list)
+    return performance_list

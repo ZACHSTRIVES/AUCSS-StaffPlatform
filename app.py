@@ -36,10 +36,8 @@ test.py ==> 测试使用.
 版本记录：
 V0.0.1 Init Web------------
 开发者：Zach Wang
-产品经理：Dougie Feng
+策划人员：Dougie Feng, Zach Wang
 测试人员：Dougie Feng, Hanzheng Wang (China status), William Wu, Ariel Wu
-
-
 '''
 
 
@@ -232,6 +230,10 @@ def meeting_leave():
             all_event = fetch_all_event_id_from_database()
             return render_template('MeetingLeaveEP.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
                                    user_name=login_['name'], events=all_event)
+        elif login_['type'] == 5:
+            all_event = fetch_all_event_id_from_database()
+            return render_template('MeetingLeaveMKT.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
+                                   user_name=login_['name'], events=all_event)
         elif login_['type'] == 6:
             all_event = fetch_all_event_id_from_database()
             return render_template('MeetingLeaveOP.html', info=info, info1=info1, meetings=meetings, leaves=all_leaves,
@@ -301,7 +303,7 @@ def edit_meeting(mid):
             title = meeting[0][1]
             location = meeting[0][2]
             datetime = meeting[0][3]
-            datetime =datetime_format_TO_html_format(datetime)
+            datetime = datetime_format_TO_html_format(datetime)
             print(date)
             return render_template('EditMeeting.html', user_name=login_['name'], mid=mid, title=title,
                                    location=location, time=datetime)
@@ -312,7 +314,7 @@ def edit_meeting(mid):
             location = request.form.get('location')
             title = request.form.get('title')
             time = request.form.get('time')
-            datetime =html_format_TO_mysql_format(time)
+            datetime = html_format_TO_mysql_format(time)
             sql = "update meeting set meeting_title='%s',meeting_location='%s',meeting_date='%s' where meeting_id=%s" % (
                 title, location, datetime, mid)
             edit_meeting_to_database(sql)
@@ -386,12 +388,12 @@ def recall_notice(id):
 @app.route('/HREventSignupInfo')
 def event_signup_info():
     login_ = login_status()
-    if len(login_)==0:
+    if len(login_) == 0:
         return redirect(url_for('dashbord'))
     else:
         events = fetch_all_event_id_from_database()
-        all_member=classification_of_event(events)
-        return render_template('HREventSignUpInfo.html', user_name=login_['name'], events=events,all_member=all_member)
+        all_member = classification_of_event(events)
+        return render_template('HREventSignUpInfo.html', user_name=login_['name'], events=events, all_member=all_member)
 
 
 '''
@@ -570,7 +572,7 @@ def event_needs(id):
         return redirect(url_for('event_needs', id=id))
 
 
-@app.route('/DelectNeedsItem<eventid><id>')
+@app.route('/DelectNeedsItem<eventid>/<id>')
 def del_item(eventid, id):
     login_ = login_status()
     if len(login_) == 0:
@@ -613,7 +615,7 @@ def event_needs_op_page(id):
                            bought=bought)
 
 
-@app.route('/boughtitem<id><eid>')
+@app.route('/boughtitem<id>/<eid>')
 def complete_buy(id, eid):
     login_ = login_status()
     if len(login_) == 0:
@@ -621,11 +623,14 @@ def complete_buy(id, eid):
     finish_buy_item(id, login_['name'])
     return redirect(url_for('event_needs_op_page', id=eid))
 
+
 '''
  Page for department of MKT 市场部===================================================================================================================
 '''
-@app.route('/mkt',methods=['GET'])
-def mkt(issu,notification):
+
+
+@app.route('/mkt', methods=['GET'])
+def mkt(issu, notification):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for('dashbord'))
@@ -633,52 +638,63 @@ def mkt(issu,notification):
 
     return render_template('MKTadmin.html', user_name=login_['name'], issue_information=issu,
                            notification=notification)
-@app.route('/WechatArticle',methods=['GET'])
+
+
+@app.route('/WechatArticle', methods=['GET'])
 def article():
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for('dashbord'))
-    articles=fetch_all_article()
-    works=get_works_list(articles)
-    tasks=get_task_list(login_['email'],articles)
-    return render_template('MKTArticle.html',user_name=login_['name'],articles=articles,works=works,tasks=tasks)
+    articles = fetch_all_article()
+    works = get_works_list(articles)
+    tasks = get_task_list(login_['email'], articles)
+    return render_template('MKTArticle.html', user_name=login_['name'], articles=articles, works=works, tasks=tasks)
 
-@app.route('/finishtask<taskid><articleid><type>')
-def finish_aticle_task(taskid,articleid,type):
+
+@app.route('/finishtask<taskid>/<articleid>/<type>')
+def finish_aticle_task(taskid, articleid, type):
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for('dashbord'))
-    finish_task_in_db(taskid,articleid,type)
-    print(taskid,articleid,type)
+    finish_task_in_db(taskid, articleid, type)
+    # print(taskid, articleid, type)
     return redirect(url_for('article'))
 
 
-
-
-@app.route('/AddAriticle',methods=['GET','POST'])
+@app.route('/AddAriticle', methods=['GET', 'POST'])
 def add_article():
     login_ = login_status()
     if len(login_) == 0:
         return redirect(url_for('dashbord'))
-    if request.method=='GET':
-        mkt_staffs=fetch_all_mkt_staff()
-        return render_template('MKTAddNewArticle.html', user_name=login_['name'],staffs=mkt_staffs)
-    elif request.method=='POST':
-        title=request.form.get('title')
-        due_date=html_format_TO_mysql_format(request.form.get('due_date'))
-        banner_duedate=html_format_TO_mysql_format(request.form.get('banner_duedate'))
-        banner_staff=request.form.get('banner_staff')
-        text_duedate=html_format_TO_mysql_format(request.form.get('text_duedate'))
-        text_staff=request.form.get('text_staff')
-        style_duedate=html_format_TO_mysql_format(request.form.get('style_duedate'))
-        style_staff=request.form.get('style_staff')
+    if request.method == 'GET':
+        mkt_staffs = fetch_all_mkt_staff()
+        return render_template('MKTAddNewArticle.html', user_name=login_['name'], staffs=mkt_staffs)
+    elif request.method == 'POST':
+        title = request.form.get('title')
+        due_date = html_format_TO_mysql_format(request.form.get('due_date'))
+        banner_duedate = html_format_TO_mysql_format(request.form.get('banner_duedate'))
+        banner_staff = request.form.get('banner_staff')
+        text_duedate = html_format_TO_mysql_format(request.form.get('text_duedate'))
+        text_staff = request.form.get('text_staff')
+        style_duedate = html_format_TO_mysql_format(request.form.get('style_duedate'))
+        style_staff = request.form.get('style_staff')
 
-        add_article_to_db(title,due_date)
-        id=get_article_id(title)[0]
-        add_works_to_db(id,1,banner_staff,banner_duedate)
-        add_works_to_db(id,2,text_staff,text_duedate)
-        add_works_to_db(id,3,style_staff,style_duedate)
+        add_article_to_db(title, due_date)
+        id = get_article_id(title)[0]
+        add_works_to_db(id, 1, banner_staff, banner_duedate)
+        add_works_to_db(id, 2, text_staff, text_duedate)
+        add_works_to_db(id, 3, style_staff, style_duedate)
         return redirect(url_for('article'))
+
+
+@app.route('/MKTperformance',methods=['GET'])
+def MKTperformance():
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for('dashbord'))
+    performance_list=count_performance()
+    return render_template('MKTperformance.html',performances=performance_list)
+
 
 
 if __name__ == '__main__':
@@ -687,6 +703,8 @@ if __name__ == '__main__':
 '''
 BUG反馈===================================================================================================================
 '''
+
+
 @app.route('/bugfeedback', methods=['GET', 'POST'])
 def bug_feedback():
     if request.method == 'GET':

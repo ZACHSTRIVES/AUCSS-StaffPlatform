@@ -1,0 +1,45 @@
+{% extends 'MKTadmin.html' %}
+
+
+{% block content %}
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+            <span class="icon color7-bg"><i class="fa fa-line-chart"></i></span>
+            <h1>Performance</h1>
+            <h4>市场部绩效</h4>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+{% block container %}
+    <div class="container-widget">
+        <div class="row">
+            {% for i in performances %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            {{ i[0] }}
+                            <ul class="panel-tools">
+                                <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="panel-body">
+                            <p><b>海报/Banner：</b>{{ i[1] }} 次</p>
+                            <p><b>文案：</b>{{ i[2] }} 次</p>
+                            <p><b>排版：</b>{{ i[3] }} 次</p>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
