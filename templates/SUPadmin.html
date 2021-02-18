@@ -1,0 +1,58 @@
+{% extends 'backend.html' %}
+
+
+{% block loading %}
+{% endblock %}
+
+{% block siderbar %}
+
+    <div class="sidebar clearfix">
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">FEATURE</li>
+            <li><a href="{{ url_for('dashbord') }}"><span class="icon color5"><i class="fa fa-home"></i></span>Dashboard</a>
+            </li>
+            <li><a href="{{ url_for('meeting_leave') }}"><span class="icon color5"><i class="fa fa-group"></i></span>Meeting
+                Leave | 请假</a>
+            </li>
+
+
+        </ul>
+
+        <ul class="sidebar-panel nav">
+            <li class="sidetitle">主席团</li>
+            <li><a href="#"><span class="icon color15"><i class="fa fa-cubes"></i></span>Event
+                Dashboard<span class="caret"></span></a>
+                <ul>
+                    {% for item in events %}
+                        <li><a href="{{ url_for("event_dashboard",id=item[0]) }}">{{ item[1] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><a href="{{ url_for('manag_meeting') }}"><span class="icon color15"><i class="fa fa-columns"></i></span>Manage
+                Meetings | 会议管理</a></li>
+            </li>
+            <li><a href="{{ url_for('manage_leave') }}"><span class="icon color5"><i class="fa fa-group"></i></span>Leave Request | 请假审批</a>
+            </li>
+            <li><a href="{{ url_for('notification') }}"><span class="icon color5"><i class="fa fa-bullhorn"></i></span>Notification | 发送通知</a>
+            </li>
+            <li><a href="{{ url_for('event_signup_info') }}"><span class="icon color5"><i class="fa fa-info"></i></span>Event SignUp | 活动报名</a>
+            </li>
+            <li><a href="{{ url_for('article') }}"><span class="icon color15"><i class="fa fa-weixin"></i></span>Wechat Article | 公众号推文</a>
+            </li>
+            <li><a href="{{ url_for('MKTperformance') }}"><span class="icon color15"><i class="fa fa-line-chart"></i></span>Performance | 绩效</a>
+            </li>
+            <li><a href="#"><span class="icon color15"><i class="fa fa-cc-visa"></i></span>活动采购清单<span class="caret"></span></a>
+                <ul>
+                    {% for item in events %}
+                        <li><a href="{{ url_for("event_needs_op_page",id=item[0]) }}">{{ item[1] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><a href="{{ url_for('sponsor_database') }}"><span class="icon color15"><i class="fa fa-columns"></i></span>Sponsor database</a></li>
+
+
+        </ul>
+
+    </div>
+{% endblock %}

@@ -722,3 +722,16 @@ def bug_feedback():
             return redirect(url_for('dashbord'))
         except Exception as e:
             print(e)
+
+'''
+ Page for department of SUP ====================================================================================
+'''
+@app.route('/sup', methods=['GET'])
+def sup(issu, notification):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    all_event = fetch_all_event_id_from_database()
+
+    return render_template('SUPadmin.html', user_name=login_['name'], issue_information=issu, events=all_event,
+                           notification=notification)
