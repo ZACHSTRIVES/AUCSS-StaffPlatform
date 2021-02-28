@@ -18,17 +18,7 @@
 
         <!-- Start Row -->
         <div class="row">
-
-            <!-- Start Panel -->
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-title">
-                        Sponsor Database
-                    </div>
-                    <div class="panel-body table-responsive">
-                        <p>Sponsor data is an important internal secret of AUCSS, which prohibits leakage and
-                            unauthorized modification and deletion of data. </p>
-                        <a href="#" data-toggle="modal" data-target="#myModal">
+        <a href="#" data-toggle="modal" data-target="#myModal">
                             <button type="button" class="btn btn-option3 btn-xs"><i class="fa fa-plus"></i>ADD</button>
                         </a>
                         <!-- Modal -->
@@ -91,7 +81,14 @@
                             </div>
                         </div>
 
+            <!-- Start Panel -->
 
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        谈判中
+                    </div>
+                    <div class="panel-body table-responsive">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -106,18 +103,61 @@
                             </thead>
                             <tbody>
                             {% for i in sponsors %}
-                                <tr>
-                                    <td>{{ i[1] }}</td>
-                                    <td>{{ i[2] }}</td>
-                                    <td>{{ i[3] }}</td>
-                                    <td>{{ i[4] }}</td>
-                                    <td>{{ i[5] }}</td>
-                                    <td>{{ i[6] }}</td>
-                                    <td>{{ i[7] }}</td>
-                                     <td><a href="{{ url_for('edit_sponsor',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-arrows"></i>Edit</a></td>
+                                {% if i[8]==0 %}
+                                    <tr>
+                                        <td>{{ i[1] }}</td>
+                                        <td>{{ i[2] }}</td>
+                                        <td>{{ i[3] }}</td>
+                                        <td>{{ i[4] }}</td>
+                                        <td>{{ i[5] }}</td>
+                                        <td>{{ i[6] }}</td>
+                                        <td>{{ i[7] }}</td>
+                                        <td><a href="{{ url_for('edit_sponsor',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-arrows"></i>Edit</a></td>
+                                        <td><a href="{{ url_for('status_sponsor_comp',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-user"></i>谈判完成</a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
 
-                                </tr>
-                                </a>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        已谈成
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td>商家名称</td>
+                                <td>地址</td>
+                                <td>联系人</td>
+                                <td>联系方式</td>
+                                <td>联系方式类型</td>
+                                <td>负责理事</td>
+                                <td>备注</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in sponsors %}
+                                {% if i[8]==1 %}
+                                    <tr>
+                                        <td>{{ i[1] }}</td>
+                                        <td>{{ i[2] }}</td>
+                                        <td>{{ i[3] }}</td>
+                                        <td>{{ i[4] }}</td>
+                                        <td>{{ i[5] }}</td>
+                                        <td>{{ i[6] }}</td>
+                                        <td>{{ i[7] }}</td>
+                                         <td><a href="{{ url_for('edit_sponsor',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-arrows"></i>Edit</a></td>
+                                        <td><a href="{{ url_for('status_sponsor_ongoing',sid=i[0]) }}" class="btn btn-primary" name="status"><i class="fa fa-check"></i>谈判未完成</a></td>
+                                    </tr>
+                                {% endif %}
 
                             {% endfor %}
 
@@ -127,6 +167,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 
