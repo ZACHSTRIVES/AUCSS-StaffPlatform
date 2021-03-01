@@ -113,7 +113,7 @@
                                         <td>{{ i[6] }}</td>
                                         <td>{{ i[7] }}</td>
                                         <td><a href="{{ url_for('edit_sponsor',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-arrows"></i>Edit</a></td>
-                                        <td><a href="{{ url_for('status_sponsor_comp',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-user"></i>谈判完成</a></td>
+                                        <td><a href="{{ url_for('status_sponsor_comp',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-check"></i>谈判完成</a></td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
@@ -155,7 +155,7 @@
                                         <td>{{ i[6] }}</td>
                                         <td>{{ i[7] }}</td>
                                          <td><a href="{{ url_for('edit_sponsor',sid=i[0]) }}" class="btn btn-primary"><i class="fa fa-arrows"></i>Edit</a></td>
-                                        <td><a href="{{ url_for('status_sponsor_ongoing',sid=i[0]) }}" class="btn btn-primary" name="status"><i class="fa fa-check"></i>谈判未完成</a></td>
+                                        <td><a href="{{ url_for('status_sponsor_ongoing',sid=i[0]) }}" class="btn btn-primary" name="status"><i class="fa fa-user"></i>谈判未完成</a></td>
                                     </tr>
                                 {% endif %}
 
