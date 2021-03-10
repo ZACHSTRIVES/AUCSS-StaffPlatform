@@ -7,4 +7,4 @@ DEBUG = False
 SECRET_KEY = os.urandom(24)
 
 db = pymysql.connect(host='localhost', user='root',
-                     password='wangziqi123', db='AUCSS', port=3306)
+                     password='02131997', db='aucss', port=3306)

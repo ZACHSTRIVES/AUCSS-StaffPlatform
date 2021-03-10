@@ -426,10 +426,11 @@ def sponsor_database():
         contact = request.form.get('contact')
         contact_type = request.form.get('contact_type')
         staff = request.form.get('staff')
+        status = request.form.get('status')
         sponsor_comment = request.form.get('sponsor_comment')
-        sql = "INSERT INTO sponsors (sponsor_name,sponsor_add,contact_name,contact,contact_type,staff,sponsor_comment)" \
-              "VALUES ('%s','%s','%s','%s','%s','%s','%s')" % (
-                  sponsor_name, sponsor_add, contact_name, contact, contact_type, staff, sponsor_comment)
+        sql = "INSERT INTO sponsors (sponsor_name,sponsor_add,contact_name,contact,contact_type,staff,status,sponsor_comment)" \
+              "VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')" % (
+                  sponsor_name, sponsor_add, contact_name, contact, contact_type, staff, status, sponsor_comment)
         add_sponsor(sql)
         return redirect(url_for('sponsor_database'))
 
@@ -450,16 +451,35 @@ def edit_sponsor(sid):
             contact = request.form.get('contact')
             contact_type = request.form.get('contact_type')
             staff = request.form.get('staff')
+            status = request.form.get('status')
             sponsor_comment = request.form.get('sponsor_comment')
             sql = "UPDATE sponsors " \
-                  "SET sponsor_name='%s',sponsor_add='%s',contact_name='%s',contact='%s',contact_type='%s',staff='%s',sponsor_comment='%s'" \
+                  "SET sponsor_name='%s',sponsor_add='%s',contact_name='%s',contact='%s',contact_type='%s',staff='%s',status='%s',sponsor_comment='%s'" \
                   "WHERE sponsor_id=%s" % (
-                      sponsor_name, sponsor_add, contact_name, contact, contact_type, staff, sponsor_comment, sid)
+                      sponsor_name, sponsor_add, contact_name, contact, contact_type, staff, status, sponsor_comment, sid)
             add_sponsor(sql)
             return redirect(url_for("sponsor_database"))
         except Exception as e:
             raise e
 
+@app.route('/statussponsorcomp<sid>', methods=['GET', 'POST'])
+def status_sponsor_comp(sid):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    sql = "UPDATE sponsors SET status='1' WHERE sponsor_id=%s" % sid
+    add_sponsor(sql)
+    return redirect(url_for("sponsor_database"))
+
+@app.route('/statussponsorongoing<sid>', methods=['GET', 'POST'])
+def status_sponsor_ongoing(sid):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+
+    sql = "UPDATE sponsors SET status='0' WHERE sponsor_id=%s" % sid
+    add_sponsor(sql)
+    return redirect(url_for("sponsor_database"))
 
 @app.route('/deletesponsor<sid>', methods=['GET'])
 def delete_sponsor(sid):
@@ -722,3 +742,16 @@ def bug_feedback():
             return redirect(url_for('dashbord'))
         except Exception as e:
             print(e)
+
+'''
+ Page for department of SUP ====================================================================================
+'''
+@app.route('/sup', methods=['GET'])
+def sup(issu, notification):
+    login_ = login_status()
+    if len(login_) == 0:
+        return redirect(url_for(('dashbord')))
+    all_event = fetch_all_event_id_from_database()
+
+    return render_template('SUPadmin.html', user_name=login_['name'], issue_information=issu, events=all_event,
+                           notification=notification)
